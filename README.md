@@ -36,7 +36,15 @@ At the time of this writing the firmware code has been adapted from revision 1 w
 
 In order to give tribute to Tom Wong-Cornall, the inventor of the IBM Capsense USB keyboard controller, with the exceptions noted below, everything is provided with the same GPLv3 licence he used at the time.
 
-As for the exceptions there are two 3d model files, taken from SnapEDA website, that are using the [Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA)](https://creativecommons.org/licenses/by-sa/4.0/)  with the [Design Exception 1.0 licence](https://www.snapeda.com/about/FAQ/#designexception):
+### Exception for the firmware code
+
+Everything inside 'firmware' directory is source code marked under the GPLv2 licence, this is because it is already available in another forked repository of QMK VIAL under this licence.  
+I just put it here to centralize information and ease your life.  
+In the case you plan to reuse this source code in your own projects, either as is or with modifications, the GPLv2 licence will apply.
+
+### Exception for some 3D models
+
+Two 3D model files, taken from SnapEDA website, that are using the [Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA)](https://creativecommons.org/licenses/by-sa/4.0/)  with the [Design Exception 1.0 licence](https://www.snapeda.com/about/FAQ/#designexception):
 * B3U-3000P--3DModel-STEP-56544.STEP
 * TYPE-C-31-M-12--3DModel-STEP-56544.STEP
 
