@@ -1,7 +1,7 @@
 # The Leyden Jar
 
-![Leyden Jar render front](images/Leyden_Jar_Rev2_Front.png)
-![Leyden Jar render back](images/Leyden_Jar_Rev2_Back.png)
+![Leyden Jar render front](images/Leyden_Jar_Rev3_Top.png)
+![Leyden Jar render back](images/Leyden_Jar_Rev3_Bottom.png)
 
 The [Leyden Jar](https://en.wikipedia.org/wiki/Leyden_jar) is a modernized controller PCB for the Brand New Model F and Beam Spring keyboards.
 The name is taken from the first ever (crude) capacitor ever invented.
@@ -20,14 +20,13 @@ The Leyden Jar PCB is the result of one year of work trying to fullfill this lit
 
 ## Project status
 
-Two revisions have been designed.
+Several revisions have been designed.
 
 Revision 1 has been used to do a first battle test of the design on real boards.
 My own Brand New Model F77 keyboard has first been used to validate the PCB design and the firmware.  
 Later some controllers have been sent to Ellipse for further testing/development on one of it's Brand New Beam Spring Full Size Round 2 keyboards. 
 
-Revision 2 modifications are rather minor. But while revision 1 was already working great I wanted to tidy up things a bit and also Ellipse had a few requests that were nice to have implemented.  
-This is this revision that you'll find in this repository.
+Newer revisions modifications are rather minor. But while revision 1 was already working great I wanted to tidy up things a bit and also Ellipse had a few requests that were nice to have implemented.  
 
 ### Note
 At the time of this writing the firmware code has been adapted from revision 1 without any validation and the revision 2 PCB is still not manufactured and tested.
@@ -70,7 +69,9 @@ By using this material you agree that I will not be liable for any problems you 
 * 3X2 header for:
     * Solenoid driver.
     * Future PS2 AT daugherboard.
-* 3x1 header for SWD debugging.
+* 3x2 header for:   
+    * SWD debugging.
+    * External I2C connection. 
 
 ### Software
 
@@ -93,7 +94,8 @@ Contains Kicad 6.x project files.
 Contains an HTML interactive BOM, very handy for people wanting to solder the components themselves.
 
 ### production_files/jlcpcb
-Contains everything needed to manufacture and assemble the controller at JLCPCB.
+Contains everything needed to manufacture and assemble the controller at JLCPCB.  
+The 4 buttons and 2 3x2 headers are not listed in the BOM.
 
 ### images 
 Images content, mostly for this repository documentation.
@@ -106,7 +108,34 @@ Copy the content of this directory in the 'keyboards' directory of your qmk-vial
 This is a VIAL targetted firmware; although it can also work with VIA it will have limited features like no solenoid configuration support and you will be forced to upload the vial.json file each time the VIA application is opened.  
 
 The 'default' keymap is not configured at all, please only use the 'vial' keymap. 
+## Revision History
 
+### Revision 1
+
+First version, not available in this repository.
+
+### Revision 2
+
+* Added support for 2 additional columns.
+* Now uses only one I2C bus.
+* Removed external I2C EEPROM chip (keyboard state is saved in QSPI flash memory). 
+* Solenoid now driven by RP2040 IO pins (was done through I2C IO expander before).
+* Added early future support to PS/2 daughterboard using existing solenoid connector.
+* Routing improvements.
+### Revision 3
+
+* Last free pin of the solenoid connector now outputs 3.3V.
+* Top left connector rework:
+    * Now a 3X2 connector.
+    * Left 3 pins are ground and SWD pins.
+    * Right 3 pins are 3.3V and I2C pins (to drive potential future I2C devices). 
+* Run/Bootsel buttons rework:
+    * added 2 additional buttoms on the bottom of the PCB.
+    * footprints reworked to easily short pads with a flat screwdriver.
+    * buttons not populated by default.
+    * B3U-1000P variants (top press version) listed in project.
+    * still comatible with B3U-3000P variants (side press version).
+* Routing improvements.
 ## Comparison with existing controllers
 
 To my knowledge all existing controllers we see nowadays in our Model F or Beam Spring keyboards are derivatives of 2014 Tom Wong-Cornall work for the Xwhatsit controller PCB.  

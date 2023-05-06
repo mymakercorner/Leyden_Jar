@@ -21,10 +21,3 @@ W25Q16JVUXIQ,U1,USON8_3x2mm,C2843335
 mSMD110-16V,F1,Fuse_1210_3225Metric,C70102
 USBLC6-2SC6,U3,SOT-23-6,C7519
 12MHz,Y1,Crystal_SMD_3225-4Pin_3.2x2.5mm,C9002
-B3U-3000P,"SW1,SW2",SPST_B3U-3000P,C963349
-Switch matrix connector,J2,Switch_Matrix-Connector,
-TopRight,H2,Mounting_Hole,
-Ext Conn,J4,PinHeader_2x03_P2.54mm_Horizontal,
-SWD_Connector,J3,SWD_Header,
-TopLeft,H1,Mounting_Hole,
-Rico_Logo,H3,Rico_Logo,

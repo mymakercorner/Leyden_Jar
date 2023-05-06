@@ -1,4 +1,4 @@
-20539850655968380
+20541533961687314
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -57826,6 +57826,13 @@ SOT-23-6
 0
 6
 6
+Leyden_Jar
+SPST_B3U-1000P
+
+
+0
+2
+2
 Leyden_Jar
 SPST_B3U-3000P
 
