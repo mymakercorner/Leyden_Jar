@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "MIC2009A-1YM6TR")(type "KiCad")(uri "${KIPRJMOD}/library/MIC2009A-1YM6TR.kicad_sym")(options "")(descr ""))
+  (lib (name "Model-F")(type "KiCad")(uri "${KIPRJMOD}/library/Model-F.kicad_sym")(options "")(descr ""))
+)

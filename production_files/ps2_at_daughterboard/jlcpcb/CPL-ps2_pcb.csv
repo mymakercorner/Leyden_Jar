@@ -1,0 +1,17 @@
+Designator,Val,Package,Mid X,Mid Y,Rotation,Layer
+C1,1u,Capacitor_603,52.3,-40.9125,-90.0,top
+C2,100n,Capacitor_603,54.1,-40.9125,-90.0,top
+C5,1u,Capacitor_603,59.7,-42.1125,90.0,top
+FB1,CBW201209U121T,R_805,64.2,-32.6,180.0,top
+J2,USB_C_Receptacle_USB2.0,USB_C_Receptacle_HRO_TYPE-C-31-M-12,66.42,-25.9,90.0,top
+Q1,BSS138,SOT-23,51.7825,-32.79,90.0,top
+Q2,BSS138,SOT-23,55.9225,-32.81,90.0,top
+R1,1K,Resistor_603,60.4,-44.6,0.0,top
+R2,2K,Resistor_603,50.4,-39.1125,-90.0,top
+R3,1K,Resistor_603,53.3,-38.3125,180.0,top
+R4,10K,Resistor_603,51.5725,-35.9075,0.0,top
+R5,10K,Resistor_603,55.7125,-35.9275,0.0,top
+R6,10K,Resistor_603,49.1225,-32.39,90.0,top
+R7,10K,Resistor_603,58.5425,-32.38,90.0,top
+U2,MIC2009A-1YM6,SOT-23-6,56.9,-41.4125,-90.0,top
+U3,USBLC6-2SC6,SOT-23-6,58.2,-26.1,180.0,top

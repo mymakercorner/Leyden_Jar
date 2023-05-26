@@ -87,13 +87,13 @@ By using this material you agree that I will not be liable for any problems you 
 
 ## Repository content
 
-### pcb
+### pcb/leyden_jar_controller
 Contains Kicad 6.x project files.
 
-### production_files/bom
+### production_files/leyden_jar_controller/bom
 Contains an HTML interactive BOM, very handy for people wanting to solder the components themselves.
 
-### production_files/jlcpcb
+### production_files/leyden_jar_controller/jlcpcb
 Contains everything needed to manufacture and assemble the controller at JLCPCB.  
 The 4 buttons and 2 3x2 headers are not listed in the BOM.
 
@@ -173,6 +173,25 @@ Traces are also curved. While it aestetically pleasing it is also done to limit 
 
 5. I2C usage  
 This protocol is used instead of SPI to minimize IO pin usage, only 2 GPIO pins are used to drive both a DAC chip (for the voltage reference) and a IO expander chip (mostly used for driving the 3 LEDs).
+
+## PS2 AT to USB daughterboard PCB
+
+![PS2 AT Daughterboard front](images/PS2_AT_daughterboard_Front.png)
+![PS2 AT Daughterboard back](images/PS2_AT_daughterboard_Back.png)
+
+This new sister project is a daughterboard that connects into the IO expander of the Leyden Jar controller.  
+This extension aims in the future to provide PS2 AT compatibility.  
+As the same IO expander port is also used for the solenoid connector you will not be able to use both solenoid and PS2 AT extensions at the same time.
+
+### pcb/ps2_at_daughterboard
+Contains Kicad 6.x project files.
+### production_files/ps2_at_daughterboard
+Contains everything needed to manufacture and assemble the board at JLCPCB.  
+
+**WARNING!!!**  
+This project is in it's very early stage.  
+We have yet to manufacture PCBs, test them and write software for them.
+
 ## Special thanks
 
 If people as still able nowadays to type on a Model F or Beam Spring keyboard, either old good or brand new, it is thanks to the hard work and dedication of several people of this great keyboard community.
