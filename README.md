@@ -7,6 +7,25 @@ The [Leyden Jar](https://en.wikipedia.org/wiki/Leyden_jar) is a modernized contr
 The name is taken from the first ever (crude) capacitor ever invented.
 
 Please have a look at the Keebtalk [here](https://www.keebtalk.com/t/the-leyden-jar-a-tentative-pcb-replacement-for-the-brand-new-model-f-keyboards/17489/1) for more details on the development process.
+This repository is the central hub of several other repositories and links that may be need to build or dowloand software firmware and tools, see chapter below for more details.
+
+## Useful links
+
+### Leyden Jar Diagnostic Tool
+
+The **Leyden Jar Diagnostic Tool** is an application meant to perform troubleshooting and inspection on Leyden Jar controller firmwares.
+
+Github link: https://github.com/mymakercorner/Leyden_Jar_Diagnostic_Tool
+
+Windows binaries are also available from this **Leyden Jar Diagnostic Tool** Github page. 
+
+### QMK/VIAL Firmware Source Code
+
+Firmware source code is available in my forked vial-qmk repository in the **leyden_jar** branch.
+
+Github link: https://github.com/mymakercorner/vial-qmk/tree/leyden_jar
+
+Prebuilt firmwares are also available from this forked vial-qmk Github page.
 
 ## How the project started
 
@@ -34,12 +53,6 @@ At the time of this writing the firmware code has been adapted from revision 1 w
 ## Licence
 
 In order to give tribute to Tom Wong-Cornall, the inventor of the IBM Capsense USB keyboard controller, with the exceptions noted below, everything is provided with the same GPLv3 licence he used at the time.
-
-### Exception for the firmware code
-
-Everything inside 'firmware' directory is source code marked under the GPLv2 licence, this is because it is already available in another forked repository of QMK VIAL under this licence.  
-I just put it here to centralize information and ease your life.  
-In the case you plan to reuse this source code in your own projects, either as is or with modifications, the GPLv2 licence will apply.
 
 ### Exception for some 3D models
 
@@ -100,14 +113,6 @@ The 4 buttons and 2 3x2 headers are not listed in the BOM.
 ### images 
 Images content, mostly for this repository documentation.
 
-### firmware
-
-QMK VIAL source code for the controller.  
-Copy the content of this directory in the 'keyboards' directory of your qmk-vial repository.  
-
-This is a VIAL targetted firmware; although it can also work with VIA it will have limited features like no solenoid configuration support and you will be forced to upload the vial.json file each time the VIA application is opened.  
-
-The 'default' keymap is not configured at all, please only use the 'vial' keymap. 
 ## Revision History
 
 ### Revision 1
