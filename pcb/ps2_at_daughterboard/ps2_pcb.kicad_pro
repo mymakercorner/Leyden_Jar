@@ -218,7 +218,8 @@
       ],
       "track_widths": [
         0.0,
-        0.2
+        0.2,
+        0.5
       ],
       "tuning_pattern_settings": {
         "diff_pair_defaults": {
@@ -254,6 +255,10 @@
         {
           "diameter": 0.6,
           "drill": 0.3
+        },
+        {
+          "diameter": 0.8,
+          "drill": 0.4
         }
       ],
       "zones_allow_external_fillets": false,
@@ -544,7 +549,6 @@
         "bus_width": 12,
         "clearance": 0.2,
         "diff_pair_gap": 0.25,
-        "diff_pair_via_gap": 0.25,
         "diff_pair_width": 0.2,
         "line_style": 0,
         "microvia_diameter": 0.3,
@@ -563,7 +567,6 @@
         "bus_width": 12,
         "clearance": 0.2,
         "diff_pair_gap": 0.25,
-        "diff_pair_via_gap": 0.25,
         "diff_pair_width": 0.2,
         "line_style": 0,
         "microvia_diameter": 0.3,
@@ -620,6 +623,10 @@
       {
         "netclass": "Signal",
         "pattern": "Net-(R1-Pad1)"
+      },
+      {
+        "netclass": "Power",
+        "pattern": "CONN_5V"
       }
     ]
   },
@@ -765,7 +772,7 @@
         "uuid": "b49f1f85-3527-40e0-bd38-0d2e4dde6250"
       }
     ],
-    "used_designators": "#FLG1-4,J3,#PWR2-18,U1,U4",
+    "used_designators": "#FLG1-4,J3,D1,#PWR2-18,U1,U4",
     "variants": []
   },
   "sheets": [
