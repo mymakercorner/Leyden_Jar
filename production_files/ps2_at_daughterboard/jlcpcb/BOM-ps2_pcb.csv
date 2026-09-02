@@ -1,9 +1,9 @@
 Comment,Designator,Footprint,LCSC,Quantity
-100n,C2,Capacitor_603,C1525,1
-10K,"R4,R5,R6,R7",Resistor_603,C25744,4
-1K,"R1,R3",Resistor_603,C11702,2
-1u,"C1,C5",Capacitor_603,C52923,2
-2K,R2,Resistor_603,C100291,1
+100n,C2,Capacitor_603,C1590,1
+10K,"R4,R5,R6,R7",Resistor_603,C25804,4
+1K,"R1,R3",Resistor_603,C21190,2
+1u,"C1,C5",Capacitor_603,C15849,2
+2K,R2,Resistor_603,C22975,1
 BSS138,"Q1,Q2",SOT-23,C2874697,2
 CBW201209U121T,FB1,R_805,C139186,1
 D_Schottky_Small,D1,D_SOD-123,C8598,1
