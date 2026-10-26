@@ -42,7 +42,8 @@ images/                         renders used by README.md
   not the global KiCad libraries, so the repo stays self-contained.
 - On the Rev 3 schematic, some symbol `lib_id`s are the original parts (e.g. `MCP4725`, `ADP7142`, `W25Q32JVSS`) while
   the **Value** field and BOM carry the actually fitted part (MCP4716, ADP122, W25Q16JVUX). Trust Value/BOM/LCSC.
-- Manufacturing target is **JLCPCB** assembly; every assembled part needs an LCSC number. Buttons and the two 2x3
+- Manufacturing target is **JLCPCB** assembly; every assembled part needs an LCSC number. Choose parts from the
+  JLCPCB assembly library (jlcpcb.com/parts, in stock), not the wider LCSC catalog. Buttons and the two 2x3
   headers are deliberately left out of the assembly BOM.
 
 ## Rev 3 design reference (starting point for V2)
@@ -89,16 +90,44 @@ Planned hardware changes from Rev 3:
 - **Core supply: external 1.1 V LDO, on-chip switching regulator unused** (EMI decision, deviates from the plan).
   Per RP2350 datasheet section 6.3.7, "External core supply with on-chip regulator disabled": no inductor, VREG_FB
   to GND, and VREG_VIN + VREG_AVDD still powered (they feed POR/brownout). The internal regulator still starts at
-  power-up (~400 uA) until firmware writes 1 to the VREG register's HIZ field. The LDO is fed from 3V3, so core
-  current now comes 1:1 from the 3V3 LDO. Core voltage is fixed, which is fine: no overclocking is planned.
-  The 3V3 LDO (ADP122, 300 mA in Rev 3) is likely to be upgraded to a higher-current part for margin.
-- Flash: **ZD25Q64DSIGT**, 8 MB, SOP-8 208 mil (replaces the 2 MB USON-8 W25Q16).
+  power-up (~400 uA) until firmware writes 1 to the VREG register's HIZ field. VREG_PGND to GND (pin description:
+  "tie to ground externally"), VREG_LX unconnected. Core voltage is fixed, which is fine: no overclocking is planned.
+  - Core LDO: **TLV74311PDBVR** (JLCPCB C485147, 1.1 V fixed, 300 mA, SOT-23-5), **fed from +5V**, not 3V3, so core
+    current steps stay off the 3V3 reference rail (about 0.2 W at 50 mA, fine in SOT-23-5; input max 5.5 V).
+    The RP2350 allows any supply order except VREG_VIN/VREG_AVDD, which must rise together (both on 3V3).
+    DVDD spec: 1.05-1.16 V, transients within ±100 mV.
+  - 3V3 LDO: **TPS7A2033PDBVR** (JLCPCB C2862740, 300 mA, 7 µVrms, 95 dB PSRR at 1 kHz, ±1.5% over line, load and
+    temperature). Same SOT-23-5 pinout as the ADP122 (IN, GND, EN, NC, OUT), which JLCPCB barely stocks any more.
+    3V3 is the sense chain's reference: row bias, V_REF and the column pulses are all ratiometric to it, so noise,
+    PSRR and load transients matter more than absolute accuracy. Keep switching loads (TFT backlight) off 3V3 if
+    possible. Fallback if more current is ever needed: LP5912-3.3DRVR (C524780, 500 mA, WSON-6 2x2).
+- USB input protection: the **mSMD110 polyfuse (F1) is replaced by an AP22653W6-7** current-limited power switch
+  (JLCPCB C2158037, SOT-26, 65 mΩ). Use the non-"A" version: it limits current and recovers by itself, while the "A"
+  version latches off. Path: VBUS -> AP22653 -> +5V.
+  - EN (active high) tied to IN. RLIM about 20k gives a limit of about 1.29 A (1.20-1.38 A at 25 °C), close to
+    Rev 3's 1.1 A fuse hold current. FAULT is open-drain and can be left unconnected.
+  - Caps: ≥ 0.1 µF on IN next to the IC, keeping VBUS-side capacitance ≤ 10 µF for USB attach. On OUT, 0.1 µF plus
+    ≥ 10 µF bulk (Rev 3 had 4.7 µF on +5V); soft-start (about 0.5 ms) limits the inrush.
+  - With VIN below UVLO (USB unplugged: PS/2-only mode, or the split half powered over J7) it blocks reverse current
+    (≤ 1 µA). The 600 Ω output discharge is only active while disabled, and only for a limited time.
+  - While enabled, reverse current is only limited (trips at VOUT - VIN about 65 mV, 0.32 A, off after 2-20 ms).
+    Accepted: a little back-feed if both split halves are on USB, or PS/2 and USB are both live. No extra ORing part.
+  - VIN abs max 6.0 V. Check the SOT-26 pin numbering against the datasheet when drawing.
+- Flash: **W25Q64JVXGIM**, 8 MB, XSON-8 4x4 (JLCPCB C6604688; replaces the 2 MB USON-8 W25Q16). Smallest package
+  JLCPCB stocks for 64 Mbit at 3.3 V (the plan's ZD25Q64DSIGT isn't in their library). "IM" = QE bit 0 from the
+  factory. Check the exposed-pad size against Winbond's XSON drawing before routing (U1 currently uses
+  `WSON-8-1EP_4x4mm_P0.8mm_EP2.2x3mm`).
+- Crystal: **ABM8-272-T3** (JLCPCB C20625731), the part the RP2350 datasheet recommends (12 MHz, CL 10 pF,
+  ESR ≤ 50 Ω). Use the Pico 2 loading: 15 pF caps and a 1k series resistor on XOUT.
 - The matrix sense chain (LMV339s, DAC, ROW0-7 on GP0-7, COL0-15) stays untouched.
-- New through-hole breakouts: TFT display (SPI), rotary encoder (with RC debounce: 10k pull-up + 100 nF per phase),
-  free expansion pins, and a 3-pin split header (5V, GND, DATA) left of the USB-C connector.
+- New through-hole breakouts: TFT display (SPI), rotary encoder (with RC debounce: 10k pull-up + 100 nF per phase;
+  no debounce on the encoder button), free expansion pins, and a 3-pin split header (5V, GND, DATA) left of the
+  USB-C connector.
 - The 18 column 1k series resistors (Rev 3: R14-R16, R18, R20-R24, R26, R28-R32, R34, R47, R48) are removed:
   COLn goes straight from the MCU to J2. This frees the band above J2 so the RP2350B can sit lower. The 47k
-  row pull-ups (R7, R9, R13, R19, R27, R35, R37, R39) stay.
+  A_ROW bias resistors (R7, R9, R13, R19, R27, R35, R37, R39, to `ROW_PULLUP`, a 7.5k/1k divider from 3V3 at about
+  0.39 V) stay.
+- LEDs on GPIOs directly: they draw a few mA each, well within GPIO drive.
 
 Planned GPIO map (Rev 3 assignments unchanged unless listed):
 
@@ -119,8 +148,10 @@ Planned GPIO map (Rev 3 assignments unchanged unless listed):
 | 32, 41, 46, 47 | free | through holes for expansion |
 
 Points to verify while implementing (against the RP2350 datasheet / hardware design guide / QMK docs):
-- Datasheet guidance for VREG_LX and VREG_PGND with the regulator disabled (not covered by the 6.3.7 excerpt found
-  so far). The plan's 2.2 µH inductor is moot with the LDO.
+- VREG_LX in datasheet Figure 24 (page 410) looks unconnected but the figure couldn't be rendered to confirm.
+- Rev 3's DAC symbol is an MCP4725, whose pin 6 is A0, so the fitted MCP4716's VREF pin floats. Check what the
+  MCP4716 datasheet wants for VREF when VDD is the selected reference.
+- Which TFT module J8 targets, and whether its VCC (and backlight) can run from 5 V.
 - GP33 is an SPI0 function pin, not SPI1. That's harmless if CS is driven as a plain GPIO. No free pin in the
   plan has the SPI1 RX function, so the display must work with MISO unused.
 - PIO blocks see a 32-GPIO window (base 0 or 16). Current firmware: PIO0 = matrix scanner, PIO1 = PS/2
@@ -130,13 +161,19 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
   so clock = data - 1 on J4 works. On the RP2350 that index is relative to the PIO's GPIOBASE, which is fine
   while PS/2 stays below GP32.
 - Moving COL16/17 to GP28/29 requires changing the `col_16_17` PIO pin base (26 today) in `pio_matrix_scan.c`.
-- `PS2_ENABLE` (GP40) is actually a daughterboard **presence-detect input**: about 3.3 V from a divider on the
-  daughterboard, with a 47k pull-down (R50) on this board. With erratum E9, a 47k pull-down may not pull the pad
-  back low after it was high. Use about 8.2k or less, or confirm the silicon stepping.
-- Split 5V header: avoid back-feeding VBUS between two boards that are both on USB (diode or power-path), and add
-  ESD protection and a series resistor on DATA on this board too.
-- GPIO LED drive current (PCA9557 previously sank the LED current), and the 3V3 budget of the ADP122 (300 mA) with
-  the TFT and backlight added.
+- `PS2_ENABLE` (GP40) is actually a daughterboard **presence-detect input**: 3.33 V from the PS/2 host's 5 V through
+  a 1k/2k divider on the daughterboard, with a 47k pull-down (R50) on this board. **Keep 47k.** Erratum E9 (A2
+  silicon only, fixed from A3) could hold the pad at about 2.2 V only if the daughterboard were unplugged from J4
+  while the board stays powered. With a PS/2 host off, the daughterboard's 2k still pulls the pin low hard, and
+  firmware latches PS/2 mode at boot anyway.
+- Split DATA: **no series resistor** (or a 0R footprint). QMK's RP PIO half-duplex driver has the receiver drive the
+  line high at 2 mA while the transmitter pulls low at 12 mA. With RP2350 worst-case levels (VOH 2.62 V at 2 mA,
+  VOL 0.5 V at 12 mA, VIL 0.8 V), the low level breaks at about 33R per board. Put ESD protection at the connector.
+- Split header J7: 5V pin on the +5V rail (after the AP22653), so one board on USB powers both through its own
+  current limit. ESD: USBLC6-2SC6 (C7519, same as the USB one) at J7, with DATA on one channel and its VBUS pin on +5V.
+  The PS/2 host's 5 V also lands on +5V (J4 pin 1, via the daughterboard's MIC2009 + Schottky).
+- 3V3 budget: about 40 mA for the core design (RP2350 IO/USB, flash, comparators, DAC, LEDs; the core is on +5V
+  now), plus the TFT and Qwiic devices. 300 mA leaves margin unless the backlight runs from 3V3.
 - **Erratum RP2350-E9** on input pads: the ROW inputs have 10k external pull-ups to 3V3, which should be safe.
   Check the silicon stepping JLCPCB stocks.
 
