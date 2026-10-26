@@ -11,7 +11,8 @@ controller in Model F Labs' Brand New Model F and Beam Spring keyboards. Author:
 - Work in progress: **Leyden Jar V2**, a new design based on the **RP2350**, developed on branch
   `leyden-jar-v2-work` (base branch: `main`).
 - Firmware lives elsewhere (vial-qmk fork, `leyden_jar` branch:
-  https://github.com/mymakercorner/vial-qmk/tree/leyden_jar). Diagnostic tool:
+  https://github.com/mymakercorner/vial-qmk/tree/leyden_jar, code in `keyboards/leyden_jar/`: PIO matrix scan,
+  DAC, IO expander, custom PS/2 *device* driver in `ps2/`). Diagnostic tool:
   https://github.com/mymakercorner/Leyden_Jar_Diagnostic_Tool. This repo is hardware only.
 
 ## Repository layout
@@ -76,25 +77,65 @@ Connectors:
   5 3V3, 6 GND. The PS/2 AT daughterboard plugs in here; solenoid and PS/2 can't be used together.
 - 4 RUN/BOOTSEL buttons (B3U-1000P top-press or B3U-3000P side-press, top and bottom side), not populated by default.
 
-## V2 (RP2350) design notes
+## V2 (RP2350B) target design
 
-Things that differ from the RP2040 and must be handled in the new schematic. Check every one against the current
-RP2350 datasheet and hardware design guide before relying on it:
+"V2" here is called **Rev 4** in the external plan document the user shares (read-only, kept outside this repo).
+The plan is a starting point, and technical changes are expected during development. When the plan and good
+engineering disagree, raise it with the user rather than silently following either.
 
-- Package choice: **RP2350A** (QFN-60, 30 GPIO) keeps the Rev 3 pin budget; **RP2350B** (QFN-80, 48 GPIO) frees pins
-  for more columns or for removing the I2C IO expander. Not decided yet.
-- The core supply comes from an on-chip **switching regulator** (needs an external inductor and specific
-  layout around VREG_LX / VREG_FB / VREG_PGND / VREG_AVDD), not the RP2040's linear regulator. Its layout needs
-  care because it is a new noise source next to the capacitive sense front end.
-- Same 12 MHz crystal, QSPI flash, USB, and SWD concept as RP2040; pin numbers and decoupling differ.
-- The RP2350 has a second QSPI chip select available on a GPIO (e.g. for optional PSRAM).
-- **Erratum RP2350-E9** (GPIO input with pull-down can latch at an intermediate voltage on early steppings):
-  relevant for the ROW inputs fed by the LMV339 open-drain outputs. Check which silicon stepping JLCPCB stocks.
-- Firmware impact: the vial-qmk port must move to the RP2350 (QMK/ChibiOS support and PIO program changes).
+Planned hardware changes from Rev 3:
+- **RP2350B** (QFN-80, 48 GPIO) replaces the RP2040. The **PCA9557 IO expander is removed**; its LEDs and PS2_ENABLE
+  move to native GPIOs. The I2C bus stays for the MCP4716 threshold DAC (and J3).
+- Add the RP2350 core **switching regulator** (external inductor plus VREG_LX / VREG_FB / VREG_PGND / VREG_AVDD
+  network per the Raspberry Pi hardware design guide). It is a new noise source next to the capacitive front end,
+  so keep it away from the matrix traces and LMV339s.
+- Flash: **ZD25Q64DSIGT**, 8 MB, SOP-8 208 mil (replaces the 2 MB USON-8 W25Q16).
+- The matrix sense chain (LMV339s, DAC, ROW0-7 on GP0-7, COL0-15) stays untouched.
+- New through-hole breakouts: TFT display (SPI), rotary encoder (with RC debounce: 10k pull-up + 100 nF per phase),
+  free expansion pins, and a 3-pin split header (5V, GND, DATA) left of the USB-C connector.
+- Possibly remove the through-hole row/column resistors in the 33-pin ribbon cable area (to be confirmed).
 
-Open decisions should be confirmed with the user, not assumed. Examples: RP2350A vs B, whether V2 lives in a new
-`pcb/` folder or replaces the Rev 3 project in place, flash size, keeping the PCA9557/LMV339/MCP4716 parts, and
-board outline/connector placement compatibility with existing Model F / Beam Spring cases.
+Planned GPIO map (Rev 3 assignments unchanged unless listed):
+
+| GPIO | Net | Notes |
+|---|---|---|
+| 0-7 | ROW0-7 | unchanged |
+| 8-15, 18-25 | COL0-15 | unchanged |
+| 16 / 17 | SDA / SCL | unchanged (DAC, J3) |
+| 26 / 27 | SOLENOID_ENABLE / SOLENOID_PULSE | moved from 28/29; also PS/2 clock/data via J4 |
+| 28 / 29 | COL16 / COL17 | moved from 26/27 |
+| 30 / 31 | TFT SPI_SCK / SPI_MOSI | SPI1 SCK / TX |
+| 33 / 34 / 35 | TFT CS / DC / RST | |
+| 36 | TFT_BLK | backlight, PWM |
+| 37 / 38 / 39 | ENCODER_A / ENCODER_B / ENCODER_BUTTON | |
+| 40 | PS2_ENABLE | was PCA9557 |
+| 42 / 43 / 44 | LED1 / LED2 / LED3 | were PCA9557 LED0-2 (on J2) |
+| 45 | UART_DATA | split link, half-duplex PIO serial |
+| 32, 41, 46, 47 | free | through holes for expansion |
+
+Points to verify while implementing (against the RP2350 datasheet / hardware design guide / QMK docs):
+- Inductor value: the plan says 2.2 µH; check the value the current hardware design guide specifies.
+- GP33 is an SPI0 function pin, not SPI1. That's harmless if CS is driven as a plain GPIO. No free pin in the
+  plan has the SPI1 RX function, so the display must work with MISO unused.
+- PIO blocks see a 32-GPIO window (base 0 or 16). Current firmware: PIO0 = matrix scanner, PIO1 = PS/2
+  (its program fills all 32 instructions). The split serial on GP45 therefore needs **PIO2** with GPIOBASE 16,
+  not PIO0 as the plan's firmware section says.
+- PS/2 pin order is free: the firmware patches the `ps2out` program to wait on an absolute GPIO (`0x2080 | pin`),
+  so clock = data - 1 on J4 works. On the RP2350 that index is relative to the PIO's GPIOBASE, which is fine
+  while PS/2 stays below GP32.
+- Moving COL16/17 to GP28/29 requires changing the `col_16_17` PIO pin base (26 today) in `pio_matrix_scan.c`.
+- `PS2_ENABLE` (GP40) is actually a daughterboard **presence-detect input**: about 3.3 V from a divider on the
+  daughterboard, with a 47k pull-down (R50) on this board. With erratum E9, a 47k pull-down may not pull the pad
+  back low after it was high. Use about 8.2k or less, or confirm the silicon stepping.
+- Split 5V header: avoid back-feeding VBUS between two boards that are both on USB (diode or power-path), and add
+  ESD protection and a series resistor on DATA on this board too.
+- GPIO LED drive current (PCA9557 previously sank the LED current), and the 3V3 budget of the ADP122 (300 mA) with
+  the TFT and backlight added.
+- **Erratum RP2350-E9** on input pads: the ROW inputs have 10k external pull-ups to 3V3, which should be safe.
+  Check the silicon stepping JLCPCB stocks.
+
+Still open (confirm with the user): whether V2 lives in a new `pcb/` folder or replaces the Rev 3 project in place,
+and board outline/connector placement compatibility with existing Model F / Beam Spring cases.
 
 ## Git conventions
 
