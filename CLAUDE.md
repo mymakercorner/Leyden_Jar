@@ -86,14 +86,19 @@ engineering disagree, raise it with the user rather than silently following eith
 Planned hardware changes from Rev 3:
 - **RP2350B** (QFN-80, 48 GPIO) replaces the RP2040. The **PCA9557 IO expander is removed**; its LEDs and PS2_ENABLE
   move to native GPIOs. The I2C bus stays for the MCP4716 threshold DAC (and J3).
-- Add the RP2350 core **switching regulator** (external inductor plus VREG_LX / VREG_FB / VREG_PGND / VREG_AVDD
-  network per the Raspberry Pi hardware design guide). It is a new noise source next to the capacitive front end,
-  so keep it away from the matrix traces and LMV339s.
+- **Core supply: external 1.1 V LDO, on-chip switching regulator unused** (EMI decision, deviates from the plan).
+  Per RP2350 datasheet section 6.3.7, "External core supply with on-chip regulator disabled": no inductor, VREG_FB
+  to GND, and VREG_VIN + VREG_AVDD still powered (they feed POR/brownout). The internal regulator still starts at
+  power-up (~400 uA) until firmware writes 1 to the VREG register's HIZ field. The LDO is fed from 3V3, so core
+  current now comes 1:1 from the 3V3 LDO. Core voltage is fixed, which is fine: no overclocking is planned.
+  The 3V3 LDO (ADP122, 300 mA in Rev 3) is likely to be upgraded to a higher-current part for margin.
 - Flash: **ZD25Q64DSIGT**, 8 MB, SOP-8 208 mil (replaces the 2 MB USON-8 W25Q16).
 - The matrix sense chain (LMV339s, DAC, ROW0-7 on GP0-7, COL0-15) stays untouched.
 - New through-hole breakouts: TFT display (SPI), rotary encoder (with RC debounce: 10k pull-up + 100 nF per phase),
   free expansion pins, and a 3-pin split header (5V, GND, DATA) left of the USB-C connector.
-- Possibly remove the through-hole row/column resistors in the 33-pin ribbon cable area (to be confirmed).
+- The 18 column 1k series resistors (Rev 3: R14-R16, R18, R20-R24, R26, R28-R32, R34, R47, R48) are removed:
+  COLn goes straight from the MCU to J2. This frees the band above J2 so the RP2350B can sit lower. The 47k
+  row pull-ups (R7, R9, R13, R19, R27, R35, R37, R39) stay.
 
 Planned GPIO map (Rev 3 assignments unchanged unless listed):
 
@@ -114,7 +119,8 @@ Planned GPIO map (Rev 3 assignments unchanged unless listed):
 | 32, 41, 46, 47 | free | through holes for expansion |
 
 Points to verify while implementing (against the RP2350 datasheet / hardware design guide / QMK docs):
-- Inductor value: the plan says 2.2 µH; check the value the current hardware design guide specifies.
+- Datasheet guidance for VREG_LX and VREG_PGND with the regulator disabled (not covered by the 6.3.7 excerpt found
+  so far). The plan's 2.2 µH inductor is moot with the LDO.
 - GP33 is an SPI0 function pin, not SPI1. That's harmless if CS is driven as a plain GPIO. No free pin in the
   plan has the SPI1 RX function, so the display must work with MISO unused.
 - PIO blocks see a 32-GPIO window (base 0 or 16). Current firmware: PIO0 = matrix scanner, PIO1 = PS/2
