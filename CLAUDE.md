@@ -128,6 +128,13 @@ Planned hardware changes from Rev 3:
   A_ROW bias resistors (R7, R9, R13, R19, R27, R35, R37, R39, to `ROW_PULLUP`, a 7.5k/1k divider from 3V3 at about
   0.39 V) stay.
 - LEDs on GPIOs directly: they draw a few mA each, well within GPIO drive.
+- **J4 Ext Port, 2x4:** pins 3-8 keep the Rev 3 order (+5V, SOLENOID_ENABLE, PS2_ENABLE, SOLENOID_PULSE, 3V3, GND).
+  Pins 1-2 are **USB D+/D-** coming from the PS/2 AT daughterboard Rev 3 (its USB-C port can then carry USB too):
+  **pin 1 = D-, pin 2 = D+**, chosen for routing (D+ runs north of D- at U3, so D+ passes above pin 1 to reach
+  pin 2 without crossing; the daughterboard adapts).
+  They join the controller's protected USB lines `F_D+`/`F_D-`: after the USBLC6 (U3), before the 27R series
+  resistors to the MCU. Route them as a 90 Ω pair and keep the branch short (USB full speed tolerates a short
+  stub). Never connect J1 and the daughterboard's USB port to hosts at the same time.
 
 Planned GPIO map (Rev 3 assignments unchanged unless listed):
 
@@ -143,7 +150,7 @@ Planned GPIO map (Rev 3 assignments unchanged unless listed):
 | 36 | TFT_BLK | backlight, PWM |
 | 37 / 38 / 39 | ENCODER_A / ENCODER_B / ENCODER_BUTTON | |
 | 40 | PS2_ENABLE | was PCA9557 |
-| 42 / 43 / 44 | LED1 / LED2 / LED3 | were PCA9557 LED0-2 (on J2) |
+| 42 / 43 / 44 | LED0 / LED1 / LED2 | were PCA9557 LED0-2 (on J2); schematic keeps the J2 net names |
 | 45 | UART_DATA | split link, half-duplex PIO serial |
 | 32, 41, 46, 47 | free | through holes for expansion |
 
@@ -151,7 +158,13 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
 - VREG_LX in datasheet Figure 24 (page 410) looks unconnected but the figure couldn't be rendered to confirm.
 - Rev 3's DAC symbol is an MCP4725, whose pin 6 is A0, so the fitted MCP4716's VREF pin floats. Check what the
   MCP4716 datasheet wants for VREF when VDD is the selected reference.
-- Which TFT module J8 targets, and whether its VCC (and backlight) can run from 5 V.
+- J9 encoder, 1x5 in module order: 1 ENCODER_A, 2 ENCODER_B, 3 ENCODER_BUTTON, 4 3V3, 5 GND. RC debounce on A/B
+  only (10k pull-up + 100 nF each); the button uses the internal pull-up.
+- J10 expansion, 1x6: 1 3V3, 2 GP32, 3 GP41, 4 GP46, 5 GP47, 6 GND (my suggestion; Rico hasn't objected).
+- J8 display (8-pin ST7789 module order: GND, VCC, SCL, SDA, RES, DC, CS, BLK): VCC goes through a 3-pad solder
+  jumper selecting 3V3 or +5V (decided for now; a dedicated 3.3 V LDO from +5V was the alternative). Default it
+  bridged to 3V3, which is safe for every module. 5V keeps the backlight current off the 3V3 reference rail, but only
+  modules with their own regulator accept it. BLK is GP36 (PWM); on most modules it only switches a transistor.
 - GP33 is an SPI0 function pin, not SPI1. That's harmless if CS is driven as a plain GPIO. No free pin in the
   plan has the SPI1 RX function, so the display must work with MISO unused.
 - PIO blocks see a 32-GPIO window (base 0 or 16). Current firmware: PIO0 = matrix scanner, PIO1 = PS/2
@@ -176,6 +189,11 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
   now), plus the TFT and Qwiic devices. 300 mA leaves margin unless the backlight runs from 3V3.
 - **Erratum RP2350-E9** on input pads: the ROW inputs have 10k external pull-ups to 3V3, which should be safe.
   Check the silicon stepping JLCPCB stocks.
+
+V2 schematic status (2026-10-26): drawn in place on the flat A2 sheet, ERC clean (errors). New blocks have titles
+but no dashed frames yet. Project-local symbols added: `AP22653W6`, `TLV743xxPDBV`, `MCP4716xxx-xCH`. J6 (3-pin SWD,
+JST SH side entry) uses the ZX-SH1.0-3PWT clone (C7430445) because genuine SM03B-SRSS-TB is out of stock at JLCPCB:
+check its land pattern against `JST_SH_SM03B-SRSS-TB` before ordering. The title block still says Rev 3.
 
 Still open (confirm with the user): whether V2 lives in a new `pcb/` folder or replaces the Rev 3 project in place,
 and board outline/connector placement compatibility with existing Model F / Beam Spring cases.
