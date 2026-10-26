@@ -30,9 +30,8 @@ images/                         renders used by README.md
 
 ## Tooling and rules for KiCad files
 
-- KiCad version: **KiCad 10**. The controller `.kicad_pcb`/`.kicad_pro` were migrated to KiCad 10 in commit
-  `cfeb1cf`; the controller `.kicad_sch` on disk is **still in KiCad 6 format** (`version 20211123`) until it is
-  re-saved from KiCad 10. The daughterboard project is fully on KiCad 10.
+- KiCad version: **KiCad 10**. Both the controller and the daughterboard projects (schematic, PCB and project
+  files) are in KiCad 10 format.
 - Modify KiCad projects **only through the Konnect MCP tools** (load the `konnect` skill first, then the relevant
   `kicad-schematic` / `kicad-pcb` / `kicad-library` / `kicad-review` / `kicad-manufacture` skill). Never hand-edit
   `.kicad_sch` / `.kicad_pcb` / `.kicad_sym` / `.kicad_mod` with text tools. Reading them for analysis is fine.
