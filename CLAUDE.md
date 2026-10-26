@@ -210,8 +210,16 @@ block still says Rev 3.
 
 SWD/I2C: the V2 JST SH connectors (J5 Qwiic 4-pin, J6 SWD 3-pin, bottom side) were reverted on 2026-10-26 after
 connector-placement feedback. **J3** is back: Rev 3's 2x3 SWD/I2C header with the same pinout and footprint
-(`Leyden_Jar:PinHeader_2x03_P2.54mm_Horizontal`, not assembled). On the board it keeps Rev 3's x but sits lower to
-clear the J7 breakout row: footprint origin (11.55, 5.08), pad 1 at (11.49, 5.06), body pointing +x to x 24.6.
+(`Leyden_Jar:PinHeader_2x03_P2.54mm_Horizontal`, not assembled). On the board it sits below the J7 breakout row with
+pad 1 vertically aligned on J7 pad 1: footprint origin (12.821, 5.08), pad 1 at (12.761, 5.06), body pointing +x to
+x 25.9.
+
+RUN/BOOT buttons (2026-10-26 feedback): all four B3U-1000P are back as in Rev 3, a top-side pair (SW3 // SW1 on
+RUN, SW4 // SW2 on USB_BOOT, F.Cu) and a bottom-side pair (SW1, SW2, B.Cu) at the same XY. Vertical (rot 90),
+directly left of the USB-C and below the J7 row: RUN at (51.70, 5.6), BOOT at (55.00, 5.6). Pitch 3.3 mm (was
+3.7), so the courtyards touch each other, J7's (y 3.2) and J1's (x 56.66). A button pair can't sit on the top edge
+next to J7: H1-to-J1 is 47.2 mm and J7 + two buttons need 50.8 mm. The left button's courtyard corner overlaps the
+flash U1's by 0.2 mm (bodies 0.45 mm apart), left for the layout cleanup.
 
 Still open (confirm with the user): whether V2 lives in a new `pcb/` folder or replaces the Rev 3 project in place,
 and board outline/connector placement compatibility with existing Model F / Beam Spring cases.

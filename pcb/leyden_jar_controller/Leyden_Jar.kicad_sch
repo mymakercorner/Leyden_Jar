@@ -16933,6 +16933,34 @@
 		)
 		(uuid "9fbf15fd-9070-4d21-b931-bcfd1b5388fd")
 	)
+	(wire
+		(pts
+			(xy 309.88 107.95)
+			(xy 307.34 107.95)
+		)
+		(uuid "e1db4b24-73fe-4fba-8839-6be3086e8e3a")
+	)
+	(wire
+		(pts
+			(xy 320.04 107.95)
+			(xy 322.58 107.95)
+		)
+		(uuid "bf7d306a-747f-4311-81cd-841e69364442")
+	)
+	(wire
+		(pts
+			(xy 350.52 107.95)
+			(xy 347.98 107.95)
+		)
+		(uuid "24b957d6-5e86-4a41-bd23-3afa42772bbd")
+	)
+	(wire
+		(pts
+			(xy 360.68 107.95)
+			(xy 363.22 107.95)
+		)
+		(uuid "a3705844-afd6-439a-ba16-b59b1334810f")
+	)
 	(text "USB power switch (current limit, replaces the polyfuse)"
 		(at 391.16 229.87 0)
 		(effects
@@ -17236,6 +17264,17 @@
 			(justify left bottom)
 		)
 		(uuid "42accbf0-249b-4079-a38b-7612b6419ad3")
+	)
+	(text "SWD/I2C header (Rev 3)"
+		(at 112.395 325.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+				(bold yes)
+			)
+			(justify left bottom)
+		)
+		(uuid "df02c4d6-21c0-4d43-9215-f12fdafe8fa9")
 	)
 	(label "3V3"
 		(at 320.675 168.275 90)
@@ -19447,11 +19486,26 @@
 		)
 		(uuid "4aaf9ec2-e401-41b3-ac70-9402381eab40")
 	)
-  (text "SWD/I2C header (Rev 3)"
-    (at 112.395 325.12 0)
-    (effects (font (size 1.27 1.27) (bold yes)) (justify left bottom))
-    (uuid "df02c4d6-21c0-4d43-9215-f12fdafe8fa9")
-  )
+	(label "RUN"
+		(at 307.34 107.95 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "16aa1903-3166-4392-aa7c-67cb00ee41f9")
+	)
+	(label "USB_BOOT"
+		(at 347.98 107.95 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "2b23d345-c7ae-46b2-9673-86b72ea95c7a")
+	)
 	(symbol
 		(lib_id "power:+5V")
 		(at 228.6 46.99 0)
@@ -33463,6 +33517,288 @@
 			(project "Leyden_Jar"
 				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
 					(reference "#PWR029")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 314.96 107.95 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "cfae73bb-681f-4070-a771-851ee6b9b32e")
+		(property "Reference" "SW3"
+			(at 316.23 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "B3U-1000P"
+			(at 314.96 109.474 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Leyden_Jar:SPST_B3U-1000P"
+			(at 314.96 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mouser.fr/datasheet/2/307/en-b3u-3615.pdf"
+			(at 314.96 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Push button switch, generic, two pins"
+			(at 314.96 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C5362268"
+			(at 314.96 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser" "653-B3U-3000P-B "
+			(at 314.96 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Leyden_Jar"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "SW3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 355.6 107.95 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "562091be-88f9-4cf3-886c-15c6a456421c")
+		(property "Reference" "SW4"
+			(at 356.87 105.41 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "B3U-1000P"
+			(at 355.6 109.474 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Leyden_Jar:SPST_B3U-1000P"
+			(at 355.6 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.mouser.fr/datasheet/2/307/en-b3u-3615.pdf"
+			(at 355.6 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Push button switch, generic, two pins"
+			(at 355.6 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C5362268"
+			(at 355.6 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Mouser" "653-B3U-3000P-B "
+			(at 355.6 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Leyden_Jar"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "SW4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 322.58 107.95 90)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "83ae9288-0178-43c6-a97e-561aa76f5fcc")
+		(property "Reference" "#PWR031"
+			(at 328.93 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 326.39 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 322.58 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 322.58 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 322.58 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Leyden_Jar"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "#PWR031")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 363.22 107.95 90)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "1a87d156-b583-44b2-a0ac-0de7cc4232d7")
+		(property "Reference" "#PWR041"
+			(at 369.57 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 367.03 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 363.22 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 363.22 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 363.22 107.95 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Leyden_Jar"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "#PWR041")
 					(unit 1)
 				)
 			)
