@@ -120,9 +120,22 @@ Planned hardware changes from Rev 3:
 - Crystal: **ABM8-272-T3** (JLCPCB C20625731), the part the RP2350 datasheet recommends (12 MHz, CL 10 pF,
   ESR ≤ 50 Ω). Use the Pico 2 loading: 15 pF caps and a 1k series resistor on XOUT.
 - The matrix sense chain (LMV339s, DAC, ROW0-7 on GP0-7, COL0-15) stays untouched.
-- New through-hole breakouts: TFT display (SPI), rotary encoder (with RC debounce: 10k pull-up + 100 nF per phase;
-  no debounce on the encoder button), free expansion pins, and a 3-pin split header (5V, GND, DATA) left of the
-  USB-C connector.
+- New through-hole breakouts: rotary encoder (J9, with RC debounce: 10k pull-up + 100 nF per phase; no debounce on
+  the encoder button), and a single-row 1x17 **breakout header J7** left of the USB-C connector that merges the free
+  expansion pins, the split link (5V, GND, DATA) and the TFT display (SPI), so a ribbon cable can be soldered in one
+  row (connector-placement feedback, 2026-10-26; J8 and J10 no longer exist). J7 pinout, blocks kept in their
+  original order with a GND per block:
+
+  | Pin | Net | Pin | Net |
+  |---|---|---|---|
+  | 1 | 3V3 | 10 | GND (display) |
+  | 2-5 | EXP_GP32, EXP_GP41, EXP_GP46, EXP_GP47 | 11 | TFT_VCC (JP1) |
+  | 6 | GND | 12 / 13 | TFT_SCK / TFT_MOSI |
+  | 7 | +5V (split) | 14 / 15 | TFT_RST / TFT_DC |
+  | 8 | GND (split) | 16 / 17 | TFT_CS / TFT_BLK |
+  | 9 | UART_DATA (split) | | |
+
+  Pins 10-17 keep the ST7789 module order, so a display can plug straight onto them.
 - The 18 column 1k series resistors (Rev 3: R14-R16, R18, R20-R24, R26, R28-R32, R34, R47, R48) are removed:
   COLn goes straight from the MCU to J2. This frees the band above J2 so the RP2350B can sit lower. The 47k
   A_ROW bias resistors (R7, R9, R13, R19, R27, R35, R37, R39, to `ROW_PULLUP`, a 7.5k/1k divider from 3V3 at about
@@ -160,8 +173,7 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
   MCP4716 datasheet wants for VREF when VDD is the selected reference.
 - J9 encoder, 1x5 in module order: 1 ENCODER_A, 2 ENCODER_B, 3 ENCODER_BUTTON, 4 3V3, 5 GND. RC debounce on A/B
   only (10k pull-up + 100 nF each); the button uses the internal pull-up.
-- J10 expansion, 1x6: 1 3V3, 2 GP32, 3 GP41, 4 GP46, 5 GP47, 6 GND (my suggestion; Rico hasn't objected).
-- J8 display (8-pin ST7789 module order: GND, VCC, SCL, SDA, RES, DC, CS, BLK): VCC goes through a 3-pad solder
+- Display pins (J7 10-17, 8-pin ST7789 module order: GND, VCC, SCL, SDA, RES, DC, CS, BLK): VCC goes through a 3-pad solder
   jumper selecting 3V3 or +5V (decided for now; a dedicated 3.3 V LDO from +5V was the alternative). Default it
   bridged to 3V3, which is safe for every module. 5V keeps the backlight current off the 3V3 reference rail, but only
   modules with their own regulator accept it. BLK is GP36 (PWM); on most modules it only switches a transistor.
@@ -182,20 +194,24 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
 - Split DATA: **no series resistor** (or a 0R footprint). QMK's RP PIO half-duplex driver has the receiver drive the
   line high at 2 mA while the transmitter pulls low at 12 mA. With RP2350 worst-case levels (VOH 2.62 V at 2 mA,
   VOL 0.5 V at 12 mA, VIL 0.8 V), the low level breaks at about 33R per board. Put ESD protection at the connector.
-- Split header J7: 5V pin on the +5V rail (after the AP22653), so one board on USB powers both through its own
+- Split link (J7 pins 7-9): 5V pin on the +5V rail (after the AP22653), so one board on USB powers both through its own
   current limit. ESD: a single bidirectional TVS on DATA, D1 ESD9B3.3ST5G (C96512, SOD-923, 3.3 V working).
-  The 5V pin needs no TVS: the +5V bulk capacitance absorbs an ESD discharge. Don't move J7's 5V to VBUS (it would
+  The 5V pin needs no TVS: the +5V bulk capacitance absorbs an ESD discharge. Don't move the split 5V to VBUS (it would
   tie two hosts' VBUS together, bypass the AP22653 current limit and leave live VBUS on an unplugged USB-C port).
   The PS/2 host's 5 V also lands on +5V (J4 pin 1, via the daughterboard's MIC2009 + Schottky).
 - 3V3 budget: about 40 mA for the core design (RP2350 IO/USB, flash, comparators, DAC, LEDs; the core is on +5V
-  now), plus the TFT and Qwiic devices. 300 mA leaves margin unless the backlight runs from 3V3.
+  now), plus the TFT and whatever hangs on J3's I2C. 300 mA leaves margin unless the backlight runs from 3V3.
 - **Erratum RP2350-E9** on input pads: the ROW inputs have 10k external pull-ups to 3V3, which should be safe.
   Check the silicon stepping JLCPCB stocks.
 
 V2 schematic status (2026-10-26): drawn in place on the flat A2 sheet, ERC clean (errors). New blocks have titles
-but no dashed frames yet. Project-local symbols added: `AP22653W6`, `TLV743xxPDBV`, `MCP4716xxx-xCH`. J6 (3-pin SWD,
-JST SH side entry) uses the ZX-SH1.0-3PWT clone (C7430445) because genuine SM03B-SRSS-TB is out of stock at JLCPCB:
-check its land pattern against `JST_SH_SM03B-SRSS-TB` before ordering. The title block still says Rev 3.
+but no dashed frames yet. Project-local symbols added: `AP22653W6`, `TLV743xxPDBV`, `MCP4716xxx-xCH`. The title
+block still says Rev 3.
+
+SWD/I2C: the V2 JST SH connectors (J5 Qwiic 4-pin, J6 SWD 3-pin, bottom side) were reverted on 2026-10-26 after
+connector-placement feedback. **J3** is back: Rev 3's 2x3 SWD/I2C header with the same pinout and footprint
+(`Leyden_Jar:PinHeader_2x03_P2.54mm_Horizontal`, not assembled). On the board it keeps Rev 3's x but sits lower to
+clear the J7 breakout row: footprint origin (11.55, 5.08), pad 1 at (11.49, 5.06), body pointing +x to x 24.6.
 
 Still open (confirm with the user): whether V2 lives in a new `pcb/` folder or replaces the Rev 3 project in place,
 and board outline/connector placement compatibility with existing Model F / Beam Spring cases.
