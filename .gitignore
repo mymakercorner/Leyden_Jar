@@ -8,3 +8,6 @@ pcb/ps2_at_daughterboard/jlcpcb
 pcb/ps2_at_daughterboard/bom
 # KiCad lock files
 ~*.lck
+
+# KiCad autosave files
+_autosave-*
