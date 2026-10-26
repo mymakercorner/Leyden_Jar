@@ -11377,6 +11377,180 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Device:D_TVS"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 1.016)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "D"
+				(at 0 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "D_TVS"
+				(at 0 -2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Bidirectional transient-voltage-suppression diode"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "diode TVS thyrector"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_fp_filters" "TO-???* *_Diode_* *SingleDiode* D_*"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "D_TVS_0_1"
+				(polyline
+					(pts
+						(xy -2.54 1.27)
+						(xy -2.54 -1.27)
+						(xy 2.54 1.27)
+						(xy 2.54 -1.27)
+						(xy -2.54 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.508 1.27)
+						(xy 0 1.27)
+						(xy 0 -1.27)
+						(xy -0.508 -1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 1.27 0)
+						(xy -1.27 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "D_TVS_1_1"
+				(pin passive line
+					(at -3.81 0 0)
+					(length 2.54)
+					(name "A1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 3.81 0 180)
+					(length 2.54)
+					(name "A2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 	)
 	(junction
 		(at 320.675 191.135)
@@ -11677,20 +11851,12 @@
 		(uuid "2393166c-74e6-4b64-b938-e4e3a03ae691")
 	)
 	(no_connect
-		(at 434.34 294.64)
-		(uuid "345c577f-2ba8-4a9b-b8ff-e61ecf5a1f19")
-	)
-	(no_connect
 		(at 474.98 90.17)
 		(uuid "5159c15d-b652-411d-b973-bd63491257cb")
 	)
 	(no_connect
 		(at 255.27 54.61)
 		(uuid "6fb1cc0e-32fe-44af-afcf-fa3cb80a6fde")
-	)
-	(no_connect
-		(at 434.34 299.72)
-		(uuid "78a69bad-d3bd-4770-867d-c1a570c64126")
 	)
 	(no_connect
 		(at 429.26 242.57)
@@ -13546,17 +13712,6 @@
 	)
 	(wire
 		(pts
-			(xy 414.02 294.64)
-			(xy 411.48 294.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7b05c2ff-914c-4d4e-8086-c491beaf4bbc")
-	)
-	(wire
-		(pts
 			(xy 320.675 183.515)
 			(xy 320.675 184.785)
 		)
@@ -14159,17 +14314,6 @@
 			(type default)
 		)
 		(uuid "a1ff299a-e13e-4140-ad1d-8938e59e5ac9")
-	)
-	(wire
-		(pts
-			(xy 414.02 299.72)
-			(xy 411.48 299.72)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a31ddc3f-2555-4401-81a8-63d8814b794c")
 	)
 	(wire
 		(pts
@@ -16075,6 +16219,13 @@
 		)
 		(uuid "f16140ae-e540-475f-b912-73825019df74")
 	)
+	(wire
+		(pts
+			(xy 410.21 297.18)
+			(xy 410.21 294.64)
+		)
+		(uuid "19affbbb-3ab4-46ea-8418-4d2bc3e90443")
+	)
 	(text "USB power switch (current limit, replaces the polyfuse)"
 		(at 391.16 229.87 0)
 		(effects
@@ -16401,6 +16552,16 @@
 			(justify bottom)
 		)
 		(uuid "f8d513ba-71d3-4903-8778-7d750dd43fb8")
+	)
+	(text "VREG_VIN + VREG_AVDD"
+		(at 304.8 68.58 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify bottom)
+		)
+		(uuid "4f9e5225-794b-45b4-b10c-a817ad9d30f6")
 	)
 	(label "3V3"
 		(at 320.675 168.275 90)
@@ -16791,16 +16952,6 @@
 			(justify left bottom)
 		)
 		(uuid "2c8c0691-e3c4-45e5-8bea-6de5f35e58c9")
-	)
-	(label "UART_DATA"
-		(at 411.48 294.64 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "2c9afcbb-0f5e-4ea8-933a-15f1bd8f22c4")
 	)
 	(label "A_ROW5"
 		(at 73.66 274.32 180)
@@ -17311,16 +17462,6 @@
 			(justify right bottom)
 		)
 		(uuid "6b3ef6bc-7c64-4a22-a4ef-c83999e5fdbe")
-	)
-	(label "UART_DATA"
-		(at 411.48 299.72 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "6c6aaf7a-70e5-48e4-a69d-2d6bae29bd6d")
 	)
 	(label "3V3"
 		(at 391.16 347.98 180)
@@ -18632,11 +18773,16 @@
 		)
 		(uuid "81715951-1036-43e5-bb28-d8c9bbc7629c")
 	)
-  (text "VREG_VIN + VREG_AVDD"
-    (at 304.8 68.58 0)
-    (effects (font (size 1.27 1.27)) (justify bottom))
-    (uuid "4f9e5225-794b-45b4-b10c-a817ad9d30f6")
-  )
+	(label "UART_DATA"
+		(at 410.21 294.64 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "315ba203-39a3-47ba-b1d1-043b48d2ed37")
+	)
 	(symbol
 		(lib_id "power:+5V")
 		(at 228.6 46.99 0)
@@ -19882,110 +20028,6 @@
 			(project "Leyden_Jar"
 				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
 					(reference "J9")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Power_Protection:USBLC6-2SC6")
-		(at 424.18 297.18 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "0abf2061-4088-45e9-bee8-8d50df85acc5")
-		(property "Reference" "U9"
-			(at 426.72 288.29 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "USBLC6-2SC6"
-			(at 426.72 306.07 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Leyden_Jar:SOT-23-6"
-			(at 424.18 297.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.st.com/resource/en/datasheet/usblc6-2.pdf"
-			(at 424.18 297.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Very low capacitance ESD protection diode, 2 data-line, SOT-23-6"
-			(at 424.18 297.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C7519"
-			(at 424.18 297.18 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(body_style 1)
-		(in_pos_files yes)
-		(pin "2"
-			(uuid "26c52ce4-3079-4da0-81c5-bb889185eb79")
-		)
-		(pin "5"
-			(uuid "fdd1f712-baf7-4cc3-ba87-3c31049b8f04")
-		)
-		(pin "3"
-			(uuid "c7e10361-6630-4e0b-96a8-4ade9ea04a51")
-		)
-		(pin "6"
-			(uuid "b26de5f3-b3d5-4059-bf56-cc739c36a58a")
-		)
-		(pin "4"
-			(uuid "c80e8709-97bc-4ce7-9a3f-13de2aa52a87")
-		)
-		(pin "1"
-			(uuid "523bc200-79f3-4e38-86f9-16cd4ca478a8")
-		)
-		(instances
-			(project "Leyden_Jar"
-				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-					(reference "U9")
 					(unit 1)
 				)
 			)
@@ -29184,83 +29226,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 424.18 307.34 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "bf258703-b5ba-4f96-b755-3f437a17c260")
-		(property "Reference" "#PWR016"
-			(at 424.18 313.69 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 424.18 311.15 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 424.18 307.34 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 424.18 307.34 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 424.18 307.34 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(body_style 1)
-		(in_pos_files yes)
-		(pin "1"
-			(uuid "89d13ea8-bbd6-4df5-a7ec-60880a5f36ee")
-		)
-		(instances
-			(project "Leyden_Jar"
-				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-					(reference "#PWR016")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C_Small")
 		(at 434.34 54.61 0)
 		(unit 1)
@@ -32034,83 +31999,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+5V")
-		(at 424.18 287.02 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "f7b18163-9f03-402e-bc5b-3360039dd719")
-		(property "Reference" "#PWR037"
-			(at 424.18 290.83 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "+5V"
-			(at 424.18 283.464 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 424.18 287.02 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 424.18 287.02 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+5V\""
-			(at 424.18 287.02 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(body_style 1)
-		(in_pos_files yes)
-		(pin "1"
-			(uuid "32e018bf-eff9-4936-944c-5e2926c80e3d")
-		)
-		(instances
-			(project "Leyden_Jar"
-				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-					(reference "#PWR037")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 172.085 245.11 0)
 		(unit 1)
@@ -33091,6 +32979,136 @@
 			(project "Leyden_Jar"
 				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
 					(reference "#PWR014")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_TVS")
+		(at 410.21 300.99 90)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "32d579cf-3369-4d43-b764-960fd56ba759")
+		(property "Reference" "D1"
+			(at 407.67 300.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "ESD9B3.3ST5G"
+			(at 412.75 300.99 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SOD-923"
+			(at 410.21 300.99 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.onsemi.com/download/data-sheet/pdf/esd9b-d.pdf"
+			(at 410.21 300.99 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Bidirectional transient-voltage-suppression diode"
+			(at 410.21 300.99 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Leyden_Jar"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "D1")
+					(unit 1)
+				)
+			)
+		)
+	
+		(property "LCSC" "C96512"
+			(at 410.21 300.99 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		))
+	(symbol
+		(lib_id "power:GND")
+		(at 410.21 304.8 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "92cda06e-8f60-449c-b798-4e93ebcb42ef")
+		(property "Reference" "#PWR05"
+			(at 410.21 311.15 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 410.21 308.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 410.21 304.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 410.21 304.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 410.21 304.8 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Leyden_Jar"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "#PWR05")
 					(unit 1)
 				)
 			)

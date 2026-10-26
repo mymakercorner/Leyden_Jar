@@ -183,7 +183,9 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
   line high at 2 mA while the transmitter pulls low at 12 mA. With RP2350 worst-case levels (VOH 2.62 V at 2 mA,
   VOL 0.5 V at 12 mA, VIL 0.8 V), the low level breaks at about 33R per board. Put ESD protection at the connector.
 - Split header J7: 5V pin on the +5V rail (after the AP22653), so one board on USB powers both through its own
-  current limit. ESD: USBLC6-2SC6 (C7519, same as the USB one) at J7, with DATA on one channel and its VBUS pin on +5V.
+  current limit. ESD: a single bidirectional TVS on DATA, D1 ESD9B3.3ST5G (C96512, SOD-923, 3.3 V working).
+  The 5V pin needs no TVS: the +5V bulk capacitance absorbs an ESD discharge. Don't move J7's 5V to VBUS (it would
+  tie two hosts' VBUS together, bypass the AP22653 current limit and leave live VBUS on an unplugged USB-C port).
   The PS/2 host's 5 V also lands on +5V (J4 pin 1, via the daughterboard's MIC2009 + Schottky).
 - 3V3 budget: about 40 mA for the core design (RP2350 IO/USB, flash, comparators, DAC, LEDs; the core is on +5V
   now), plus the TFT and Qwiic devices. 300 mA leaves margin unless the backlight runs from 3V3.
