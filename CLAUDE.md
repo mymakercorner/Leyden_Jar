@@ -156,8 +156,8 @@ Planned GPIO map (Rev 3 assignments unchanged unless listed):
 | 0-7 | ROW0-7 | unchanged |
 | 8-15, 18-25 | COL0-15 | unchanged |
 | 16 / 17 | SDA / SCL | unchanged (DAC, J3) |
-| 26 / 27 | SOLENOID_ENABLE / SOLENOID_PULSE | moved from 28/29; also PS/2 clock/data via J4 |
-| 28 / 29 | COL16 / COL17 | moved from 26/27 |
+| 26 / 27 | COL16 / COL17 | unchanged; the plan's swap with the solenoid was reverted (see below) |
+| 28 / 29 | SOLENOID_ENABLE / SOLENOID_PULSE | unchanged; also PS/2 clock/data via J4 |
 | 30 / 31 | TFT SPI_SCK / SPI_MOSI | SPI1 SCK / TX |
 | 33 / 34 / 35 | TFT CS / DC / RST | |
 | 36 | TFT_BLK | backlight, PWM |
@@ -185,7 +185,13 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
 - PS/2 pin order is free: the firmware patches the `ps2out` program to wait on an absolute GPIO (`0x2080 | pin`),
   so clock = data - 1 on J4 works. On the RP2350 that index is relative to the PIO's GPIOBASE, which is fine
   while PS/2 stays below GP32.
-- Moving COL16/17 to GP28/29 requires changing the `col_16_17` PIO pin base (26 today) in `pio_matrix_scan.c`.
+- COL16/17 stay on GP26/27 as in Rev 3 (decided 2026-10-30, reverting the plan's swap with the solenoid). On the
+  RP2350B, GP28/29 sit after XIN/XOUT/SWD/RUN, so COL16/17 there would be cut off from the other columns on the QFN
+  and box those pins in on F.Cu. On GP26/27 all 18 columns are consecutive pins (pads 6-28, power pins between),
+  and the `col_16_17` PIO pin base (26) in `pio_matrix_scan.c` stays as it is.
+- U5 (RP2350B) is rotated 90° on the board so COL0-17 face J2 in order (south side COL0-10, east side COL11-17):
+  F.Cu fan-out to J2 with no crossings. The south-side supply pins (5, 10, 15) sit between column pins, so their
+  decoupling caps go on B.Cu; USB D+/D- and QSPI come out on the west side.
 - `PS2_ENABLE` (GP40) is actually a daughterboard **presence-detect input**: 3.33 V from the PS/2 host's 5 V through
   a 1k/2k divider on the daughterboard, with a 47k pull-down (R50) on this board. **Keep 47k.** Erratum E9 (A2
   silicon only, fixed from A3) could hold the pad at about 2.2 V only if the daughterboard were unplugged from J4
