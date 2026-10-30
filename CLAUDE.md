@@ -204,10 +204,17 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
   reached on F.Cu between XIN and COL17 once COL11-17 slope down at 45° (0.4 mm pitch at 45° still leaves 0.13 mm
   between 0.15 mm traces). XIN runs straight to Y1 pad 1; XOUT runs right under C5, then up to R5 above the crystal.
 - USB path (placed 2026-10-30): U3 (USBLC6) sits under J1's data pads, rotated so pins 3/1 (D+/D-) face J1 and
-  pins 4/6 (F_D+/F_D-) face down. The 27R series resistors R2/R3 sit in the free band north of U5 (below J7).
-  U5's USB pins (66/67, west side, boxed in by C12) escape inward through tented vias, and F_D+/F_D- run on an inner
-  layer or B.Cu to R2/R3 and to the J4 branch. Keep F_D+ north of F_D- toward J4 so D+ passes above pin 1 to reach
-  pin 2. CC1's pull-down R43 sits below U3, reached through the gap between U3 and U8.
+  pins 4/6 (F_D+/F_D-) face down. The 27R series resistors sit right after U3 and the J4 branch (moved 2026-10-30):
+  R2 (D+) at (59.3, 11.605) rot 180 and R3 (D-) at (59.3, 12.555) rot 0, F_D side facing U3, USB_D side facing
+  west (U4 moved down to y 14.75 and C17 to y 14.06 to make room). At full speed (edges 4-20 ns, about 0.25 ns of
+  trace) the 27R position along the line doesn't matter; the guide's "close to the chip" rule is for high speed.
+  Planned route: USB_D+/USB_D- drop to vias west of R2/R3 and run straight west on B.Cu (reference: In2 +3V3,
+  continuous north of y 14.1) under U5's north ring (y about 9.5-10.5) to inward tented vias at pins 66/67 (west
+  side, boxed in by C12). D+ arrives north of D- but pin 66 (D-) is north: swap at the escape by giving D- a short
+  F.Cu stub and D+ a longer one, so no crossing is needed. SWCLK/SWDIO/RUN/SOLENOID vias under U5's east side must
+  leave without crossing the pair; the pair passes south of the bottom-side buttons SW1/SW2 (y > 7.5). Keep F_D+
+  north of F_D- toward J4 so D+ passes above pin 1 to reach pin 2. CC1's pull-down R43 sits below U3, reached
+  through the gap between U3 and U8.
 - `PS2_ENABLE` (GP40) is actually a daughterboard **presence-detect input**: 3.33 V from the PS/2 host's 5 V through
   a 1k/2k divider on the daughterboard, with a 47k pull-down (R50) on this board. **Keep 47k.** Erratum E9 (A2
   silicon only, fixed from A3) could hold the pad at about 2.2 V only if the daughterboard were unplugged from J4
