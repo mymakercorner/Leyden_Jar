@@ -25,6 +25,7 @@ pcb/leyden_jar_controller/      KiCad project of the controller (Leyden_Jar.kica
 pcb/ps2_at_daughterboard/       KiCad project of the PS/2 AT daughterboard (ps2_pcb.*), Rev 2
 production_files/<project>/     JLCPCB outputs (GERBER-*.zip, BOM-*.csv, CPL-*.csv) and bom/ibom.html
 images/                         renders used by README.md
+docs/                           design notes and reports (BOM cost, flash compatibility, ...)
 ```
 
 `*-backups/`, `.history/`, `jlcpcb/` (inside pcb/), and the daughterboard `.kicad_prl` are git-ignored.
