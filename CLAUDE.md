@@ -190,8 +190,18 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
   and box those pins in on F.Cu. On GP26/27 all 18 columns are consecutive pins (pads 6-28, power pins between),
   and the `col_16_17` PIO pin base (26) in `pio_matrix_scan.c` stays as it is.
 - U5 (RP2350B) is rotated 90° on the board so COL0-17 face J2 in order (south side COL0-10, east side COL11-17):
-  F.Cu fan-out to J2 with no crossings. The south-side supply pins (5, 10, 15) sit between column pins, so their
-  decoupling caps go on B.Cu; USB D+/D- and QSPI come out on the west side.
+  F.Cu fan-out to J2 with no crossings. USB D+/D- and QSPI come out on the west side.
+- U5 decoupling stays top-side only (no double-sided JLCPCB assembly, as Rev 3). South-side caps C6/C4/C7 (pins
+  5/10/15) sit in line about 1 mm below their pins (Rev 3 pattern). To make room, ROW4-7 (pins 1-4) and SDA/SCL
+  (pins 16/17) escape inward through tented vias under U5's body (ring between the pad row and the exposed pad),
+  COL3/COL4 jog about 0.1 mm around C4, and COL0-3 drop about 2.5 mm before fanning left. Cap-to-pin map follows the
+  schematic groups: IOVDD 5/15/24/29/41/50/60/76 = C6/C7/C8/C9/C10/C11/C26/C27, DVDD 10/32/51 = C4/C5/C29 (+ C3 1u),
+  VREG_AVDD+VREG_VIN 61/64 = C2, USB_OTP_VDD 68 = C12, QSPI_IOVDD 69 = C28, ADC_AVDD 59 = C13.
+- East side of U5: SWCLK, SWDIO, RUN and SOLENOID_ENABLE/PULSE (pins 33-37) escape inward through tented vias under
+  U5's body, like pin 24 (IOVDD, inside the COL11-17 group). That frees the area right of U5 above XOUT for C5
+  (pin 32 DVDD, in line) and C8 (pin 24, through its inward via and In2 +3V3). C9 (pin 29 IOVDD) sits about 2 mm out,
+  reached on F.Cu between XIN and COL17 once COL11-17 slope down at 45° (0.4 mm pitch at 45° still leaves 0.13 mm
+  between 0.15 mm traces). XIN runs straight to Y1 pad 1; XOUT runs right under C5, then up to R5 above the crystal.
 - `PS2_ENABLE` (GP40) is actually a daughterboard **presence-detect input**: 3.33 V from the PS/2 host's 5 V through
   a 1k/2k divider on the daughterboard, with a 47k pull-down (R50) on this board. **Keep 47k.** Erratum E9 (A2
   silicon only, fixed from A3) could hold the pad at about 2.2 V only if the daughterboard were unplugged from J4
