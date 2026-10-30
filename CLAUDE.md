@@ -192,6 +192,11 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
   and the `col_16_17` PIO pin base (26) in `pio_matrix_scan.c` stays as it is.
 - U5 (RP2350B) is rotated 90° on the board so COL0-17 face J2 in order (south side COL0-10, east side COL11-17):
   F.Cu fan-out to J2 with no crossings. USB D+/D- and QSPI come out on the west side.
+  On 2026-10-30 the core cluster moved 1.0 mm down to widen the band to J7: U5 at (42, 14.5), with its decoupling
+  caps, U1 + C1/C28/R1/R4 and the crystal block (Y1, C14, C15, R5); the DAC block (U10, R41, R42, C21) moved 0.4 mm
+  down to clear U1. North cap row now at y 7.9 (top courtyard 6.99); south caps at y 21.05 (bottom 21.96), leaving
+  about 1.2 mm of courtyard gap to J2 (pads at y 24.05) for the COL0-10 fan-out. The 1V1 LDO block (U7, C24, C25),
+  D1, JP1 and R40 stayed in the top band.
 - U5 decoupling stays top-side only (no double-sided JLCPCB assembly, as Rev 3). South-side caps C6/C4/C7 (pins
   5/10/15) sit in line about 1 mm below their pins (Rev 3 pattern). To make room, ROW4-7 (pins 1-4) and SDA/SCL
   (pins 16/17) escape inward through tented vias under U5's body (ring between the pad row and the exposed pad),
@@ -209,7 +214,7 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
   west (U4 moved down to y 14.75 and C17 to y 14.06 to make room). At full speed (edges 4-20 ns, about 0.25 ns of
   trace) the 27R position along the line doesn't matter; the guide's "close to the chip" rule is for high speed.
   Planned route: USB_D+/USB_D- drop to vias west of R2/R3 and run straight west on B.Cu (reference: In2 +3V3,
-  continuous north of y 14.1) under U5's north ring (y about 9.5-10.5) to inward tented vias at pins 66/67 (west
+  continuous north of y 14.1) under U5's north ring (y about 10.5-11.5) to inward tented vias at pins 66/67 (west
   side, boxed in by C12). D+ arrives north of D- but pin 66 (D-) is north: swap at the escape by giving D- a short
   F.Cu stub and D+ a longer one, so no crossing is needed. SWCLK/SWDIO/RUN/SOLENOID vias under U5's east side must
   leave without crossing the pair; the pair passes south of the bottom-side buttons SW1/SW2 (y > 7.5). Keep F_D+
