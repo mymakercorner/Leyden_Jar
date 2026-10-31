@@ -32933,7 +32933,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "W25Q64JVXGIM"
+		(property "Value" "W25Q64JVSSIM"
 			(at 107.95 182.88 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -32944,7 +32944,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_SON:WSON-8-1EP_4x4mm_P0.8mm_EP2.2x3mm"
+		(property "Footprint" "Package_SO:SOIC-8_5.3x5.3mm_P1.27mm"
 			(at 105.41 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -32955,7 +32955,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.fr/datasheet/2/949/w25q16jv_spi_revg_03222018_plus-1489727.pdf"
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C5362615.pdf"
 			(at 105.41 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -32976,7 +32976,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C6604688"
+		(property "LCSC" "C5362615"
 			(at 105.41 167.64 0)
 			(hide yes)
 			(show_name no)
