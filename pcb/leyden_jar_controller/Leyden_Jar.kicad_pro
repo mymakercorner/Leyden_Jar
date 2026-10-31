@@ -798,7 +798,7 @@
       },
       {
         "netclass": "Signal",
-        "pattern": "/SWIO"
+        "pattern": "/SWDIO"
       },
       {
         "netclass": "Signal",
@@ -866,11 +866,35 @@
       },
       {
         "netclass": "Default",
-        "pattern": "TFT_VCC"
+        "pattern": "/TFT_VCC"
       },
       {
         "netclass": "Signal",
         "pattern": "/PS2_ENABLE"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/TFT_SCK"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/TFT_MOSI"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/TFT_BLK"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/ENCODER_BUTTON"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/ENCODER_A"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/ENCODER_B"
       }
     ]
   },
