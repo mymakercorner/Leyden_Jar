@@ -821,7 +821,7 @@
         "pattern": "/~{QSPI_SCLK}"
       },
       {
-        "netclass": "Signal",
+        "netclass": "Default",
         "pattern": "GND"
       },
       {

@@ -19757,7 +19757,7 @@
 		(uuid "1166a790-d487-4744-b4fe-3b5d41ca28b8")
 	)
 	(label "EXP_GP46"
-		(at 542.29 245.11 180)
+		(at 542.29 242.57 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -20327,7 +20327,7 @@
 		(uuid "65ca94a1-c29c-4fff-b703-5cf6754a4ec4")
 	)
 	(label "EXP_GP47"
-		(at 542.29 247.65 180)
+		(at 542.29 240.03 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -20767,7 +20767,7 @@
 		(uuid "97db1f75-4def-4242-b002-b6192da255db")
 	)
 	(label "EXP_GP32"
-		(at 542.29 240.03 180)
+		(at 542.29 247.65 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -20917,7 +20917,7 @@
 		(uuid "baaf8483-e2d4-4c07-a970-517231aeea73")
 	)
 	(label "EXP_GP41"
-		(at 542.29 242.57 180)
+		(at 542.29 245.11 180)
 		(effects
 			(font
 				(size 1.27 1.27)
