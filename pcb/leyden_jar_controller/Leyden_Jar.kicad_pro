@@ -895,6 +895,42 @@
       {
         "netclass": "Signal",
         "pattern": "/ENCODER_B"
+      },
+      {
+        "netclass": "Fine",
+        "pattern": "/UART_DATA"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/EXP_GP47"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/EXP_GP48"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/LED0"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/LED1"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/LED2"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/EXP_GP41"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/EXP_GP46"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/EXP_GP32"
       }
     ]
   },
