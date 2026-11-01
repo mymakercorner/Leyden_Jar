@@ -817,10 +817,6 @@
         "pattern": "/XOUT"
       },
       {
-        "netclass": "Signal",
-        "pattern": "/~{QSPI_SCLK}"
-      },
-      {
         "netclass": "Default",
         "pattern": "GND"
       },
@@ -830,7 +826,7 @@
       },
       {
         "netclass": "Signal",
-        "pattern": "Net-(R41-Pad2)"
+        "pattern": "Net-(U10-VOUT)"
       },
       {
         "netclass": "USB",
@@ -906,10 +902,6 @@
       },
       {
         "netclass": "Signal",
-        "pattern": "/EXP_GP48"
-      },
-      {
-        "netclass": "Signal",
         "pattern": "/LED0"
       },
       {
@@ -931,6 +923,18 @@
       {
         "netclass": "Signal",
         "pattern": "/EXP_GP32"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/TFT_CS"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/TFT_DC"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/TFT_RST"
       }
     ]
   },
