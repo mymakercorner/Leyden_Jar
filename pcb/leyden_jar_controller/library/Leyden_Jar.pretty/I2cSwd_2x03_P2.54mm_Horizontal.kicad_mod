@@ -1,7 +1,7 @@
 (footprint "PinHeader_2x03_P2.54mm_Horizontal" (version 20211014) (generator pcbnew)
   (layer "F.Cu")
   (tedit 62A4F9BF)
-  (attr through_hole)
+  (attr through_hole exclude_from_pos_files exclude_from_bom)
   (fp_text reference "REF**" (at 5.14 -2.51 unlocked) (layer "F.SilkS")
     (effects (font (size 1 1) (thickness 0.1)))
     (tstamp dca3c020-4d1b-4c89-b297-18de641aaf51)

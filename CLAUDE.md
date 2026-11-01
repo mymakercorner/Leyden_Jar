@@ -245,7 +245,7 @@ block still says Rev 3.
 
 SWD/I2C: the V2 JST SH connectors (J5 Qwiic 4-pin, J6 SWD 3-pin, bottom side) were reverted on 2026-10-26 after
 connector-placement feedback. **J3** is back: Rev 3's 2x3 SWD/I2C header with the same pinout and footprint
-(`Leyden_Jar:PinHeader_2x03_P2.54mm_Horizontal`, not assembled). On the board it sits below the J7 breakout row with
+(`Leyden_Jar:I2cSwd_2x03_P2.54mm_Horizontal`, not assembled). On the board it sits below the J7 breakout row with
 pad 1 vertically aligned on J7 pad 1: footprint origin (12.821, 5.08), pad 1 at (12.761, 5.06), body pointing +x to
 x 25.9.
 

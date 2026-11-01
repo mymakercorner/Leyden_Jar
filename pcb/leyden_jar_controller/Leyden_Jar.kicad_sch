@@ -22603,7 +22603,7 @@
 		(in_bom no)
 		(on_board yes)
 		(in_pos_files no)
-		(dnp no)
+		(dnp yes)
 		(uuid "09a41b3a-91b9-4ceb-9528-548bd80f6506")
 		(property "Reference" "J9"
 			(at 243.84 330.2 0)
@@ -22625,7 +22625,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Vertical"
+		(property "Footprint" "Leyden_Jar:Encoder_1x05_P2.54mm_Vertical"
 			(at 243.84 337.82 0)
 			(hide yes)
 			(show_name no)
@@ -25630,7 +25630,7 @@
 		(in_bom no)
 		(on_board yes)
 		(in_pos_files no)
-		(dnp no)
+		(dnp yes)
 		(uuid "3aeb88e0-a0ef-4cee-afc0-e82e88002180")
 		(property "Reference" "J7"
 			(at 549.91 234.95 0)
@@ -25652,7 +25652,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x17_P2.54mm_Vertical"
+		(property "Footprint" "Leyden_Jar:SpiDispPlusExp_1x17_P2.54mm_Vertical"
 			(at 549.91 257.81 0)
 			(hide yes)
 			(show_name no)
@@ -27254,7 +27254,7 @@
 		(in_bom no)
 		(on_board yes)
 		(in_pos_files no)
-		(dnp no)
+		(dnp yes)
 		(uuid "52e0a7e0-0824-4177-b688-559cad8fdaff")
 		(property "Reference" "J3"
 			(at 153.67 335.28 0)
@@ -27276,7 +27276,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Leyden_Jar:PinHeader_2x03_P2.54mm_Horizontal"
+		(property "Footprint" "Leyden_Jar:I2cSwd_2x03_P2.54mm_Horizontal"
 			(at 152.4 340.36 0)
 			(hide yes)
 			(show_name no)
@@ -32035,7 +32035,7 @@
 		(in_bom no)
 		(on_board yes)
 		(in_pos_files no)
-		(dnp no)
+		(dnp yes)
 		(uuid "9cf48daf-39b6-43ce-a7bd-0d12903a705a")
 		(property "Reference" "J4"
 			(at 152.4 287.02 0)
@@ -32057,7 +32057,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Leyden_Jar:PinHeader_2x04_P2.54mm_Horizontal"
+		(property "Footprint" "Leyden_Jar:SolenoidPs2_2x04_P2.54mm_Horizontal"
 			(at 151.13 292.1 0)
 			(hide yes)
 			(show_name no)
