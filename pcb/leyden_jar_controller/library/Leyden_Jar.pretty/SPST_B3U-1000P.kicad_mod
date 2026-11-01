@@ -25,9 +25,8 @@
   (fp_circle (center 0 0) (end 0.75 0) (layer "F.Fab") (width 0.1) (fill none) (tstamp 732dd6a5-d368-4b47-a8ae-fc367c8e76bc))
   (pad "1" smd rect (at -1.2 0) (size 1.9 1.7) (layers "F.Cu" "F.Paste" "F.Mask") (tstamp 9f213648-ee57-451b-950a-b390f41e55c0))
   (pad "2" smd rect (at 1.2 0) (size 1.9 1.7) (layers "F.Cu" "F.Paste" "F.Mask") (tstamp a105e054-31a8-491e-aa20-5587a3fd5c5a))
-  (model "${KICAD6_3DMODEL_DIR}/Button_Switch_SMD.3dshapes/SW_SPST_B3U-1000P.step"
+  (model "${KICAD10_3DMODEL_DIR}/Button_Switch_SMD.3dshapes/SW_SPST_B3U-1000P.step"
     (offset (xyz 0 0 0))
     (scale (xyz 1 1 1))
-    (rotate (xyz 0 0 0))
-  )
+    (rotate (xyz 0 0 0)))
 )

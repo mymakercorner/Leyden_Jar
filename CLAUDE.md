@@ -21,7 +21,8 @@ controller in Model F Labs' Brand New Model F and Beam Spring keyboards. Author:
 pcb/leyden_jar_controller/      KiCad project of the controller (Leyden_Jar.kicad_pro/.kicad_sch/.kicad_pcb)
   library/Leyden_Jar.kicad_sym  project symbol library  (sym-lib-table -> ${KIPRJMOD}/library/...)
   library/Leyden_Jar.pretty/    project footprint library (fp-lib-table)
-  library/3d_models/            STEP models (SnapEDA, CC BY-SA 4.0 + Design Exception, see README)
+  library/3d_models/            STEP models (SnapEDA, CC BY-SA 4.0 + Design Exception; rpi_rp2350b.step from
+                                Raspberry Pi's RP2350B minimal design, MIT; see README)
 pcb/ps2_at_daughterboard/       KiCad project of the PS/2 AT daughterboard (ps2_pcb.*), Rev 2
 production_files/<project>/     JLCPCB outputs (GERBER-*.zip, BOM-*.csv, CPL-*.csv) and bom/ibom.html
 images/                         renders used by README.md

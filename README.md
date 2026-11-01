@@ -60,6 +60,9 @@ Two 3D model files, taken from SnapEDA website, that are using the [Creative Com
 * B3U-3000P--3DModel-STEP-56544.STEP
 * TYPE-C-31-M-12--3DModel-STEP-56544.STEP
 
+One 3D model file, extracted from Raspberry Pi's RP2350B minimal KiCad design (Copyright (c) 2026 Raspberry Pi Ltd), that is using the [MIT license](https://opensource.org/license/mit) (full text in `rpi_rp2350b.LICENSE.txt` next to it):
+* rpi_rp2350b.step
+
 ## Use at your own risks
 
 This PCB design and software are provided for free and I am not paid for this work.  
