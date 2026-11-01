@@ -133,7 +133,7 @@ Planned hardware changes from Rev 3:
   | Pin | Net | Pin | Net |
   |---|---|---|---|
   | 1 | 3V3 | 10 | GND (display) |
-  | 2-5 | EXP_GP32, EXP_GP41, EXP_GP46, EXP_GP47 | 11 | TFT_VCC (JP1) |
+  | 2-5 | EXP_GP32, EXP_GP41, EXP_GP46, EXP_GP47 | 11 | 3V3 (display VCC) |
   | 6 | GND | 12 / 13 | TFT_SCK / TFT_MOSI |
   | 7 | +5V (split) | 14 / 15 | TFT_RST / TFT_DC |
   | 8 | GND (split) | 16 / 17 | TFT_CS / TFT_BLK |
@@ -177,10 +177,13 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
   MCP4716 datasheet wants for VREF when VDD is the selected reference.
 - J9 encoder, 1x5 in module order: 1 ENCODER_A, 2 ENCODER_B, 3 ENCODER_BUTTON, 4 3V3, 5 GND. RC debounce on A/B
   only (10k pull-up + 100 nF each); the button uses the internal pull-up.
-- Display pins (J7 10-17, 8-pin ST7789 module order: GND, VCC, SCL, SDA, RES, DC, CS, BLK): VCC goes through a 3-pad solder
-  jumper selecting 3V3 or +5V (decided for now; a dedicated 3.3 V LDO from +5V was the alternative). Default it
-  bridged to 3V3, which is safe for every module. 5V keeps the backlight current off the 3V3 reference rail, but only
-  modules with their own regulator accept it. BLK is GP36 (PWM); on most modules it only switches a transistor.
+- Display pins (J7 10-17, 8-pin ST7789 module order: GND, VCC, SCL, SDA, RES, DC, CS, BLK): VCC is **3V3 only**
+  (decided 2026-11-01; the 3V3/+5V solder jumper JP1 was removed to avoid routing +5V to it). Every ST7789 module
+  runs on 3.3 V: the controller's supply is 3.3 V at most and its inputs aren't 5 V tolerant; modules with an
+  onboard regulator accept 3.3-5 V (about 3.0-3.1 V reaches the controller at 3.3 V in), the others 3.3 V only.
+  Cost: the backlight (about 20-40 mA for 1.3-2", 60-100 mA for 2.4-2.8") now loads the 3V3 reference rail; drive
+  it steady or with fast PWM. Optional later: a ferrite bead plus about 10 µF on the display VCC near J7.
+  BLK is GP36 (PWM); on most modules it only switches a transistor.
 - GP33 is an SPI0 function pin, not SPI1. That's harmless if CS is driven as a plain GPIO. No free pin in the
   plan has the SPI1 RX function, so the display must work with MISO unused.
 - PIO blocks see a 32-GPIO window (base 0 or 16). Current firmware: PIO0 = matrix scanner, PIO1 = PS/2
@@ -199,7 +202,7 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
   caps, U1 + C1/C28/R1/R4 and the crystal block (Y1, C14, C15, R5); the DAC block (U10, R41, R42, C21) moved 0.4 mm
   down to clear U1. North cap row now at y 7.9 (top courtyard 6.99); south caps at y 21.05 (bottom 21.96), leaving
   about 1.2 mm of courtyard gap to J2 (pads at y 24.05) for the COL0-10 fan-out. The 1V1 LDO block (U7, C24, C25),
-  D1, JP1 and R40 stayed in the top band.
+  D1, JP1 (removed 2026-11-01) and R40 stayed in the top band.
 - U5 decoupling stays top-side only (no double-sided JLCPCB assembly, as Rev 3). South-side caps C6/C4/C7 (pins
   5/10/15) sit in line about 1 mm below their pins (Rev 3 pattern). To make room, ROW4-7 (pins 1-4) and SDA/SCL
   (pins 16/17) escape inward through tented vias under U5's body (ring between the pad row and the exposed pad),
