@@ -218,8 +218,8 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
   pins 4/6 (F_D+/F_D-) face down. As routed (2026-11-01): the protected pair F_D+/F_D- leaves U3 through vias at
   about (61.9/63.2, 13.4), where the short J4 branch (pins 1/2) also starts, and runs about 32 mm west on In2.Cu
   (USB netclass, 0.17 mm, 0.1 mm gap; reference In1 GND, plus the B.Cu GND fill under 95% of it) to the 27R series
-  resistors next to U5: R2 (D+) at (34.7, 11.1) and R3 (D-) at (35.65, 11.1), vertical, F_D pads north (y 10.59),
-  USB_D pads south (y 11.61). USB_D+/USB_D- then reach U5 pins 67/66 (west side) in a few mm. At full speed (edges
+  resistors next to U5: R2 (D+) at (34.4, 11.0) and R3 (D-) at (35.35, 11.0), vertical, F_D pads north (y 10.49),
+  USB_D pads south (y 11.51) (moved 0.3 mm left / 0.1 mm up for the +1V1 route on 2026-11-01). USB_D+/USB_D- then reach U5 pins 67/66 (west side) in a few mm. At full speed (edges
   4-20 ns) the 27R position along the line doesn't matter. No other net crosses under the pair. Optional: a GND via
   next to the U3-side pair vias, where the J4 branch changes reference. CC1's pull-down R43 sits below U3, reached
   through the gap between U3 and U8.
