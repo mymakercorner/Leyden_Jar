@@ -8,9 +8,9 @@
 	)
 	(paper "A4")
 	(title_block
-		(title "Leyden Jar controller PCB")
-		(date "2023-05-06")
-		(rev "3")
+		(title "Leyden Jar controller PCB V2")
+		(date "2026-11-01")
+		(rev "1")
 		(comment 1 "Designed with love by Rico")
 	)
 	(layers
@@ -19123,8 +19123,8 @@
 		(layer "F.Fab")
 		(uuid "3c454832-af35-4e18-a9fe-2c86eebe0b52")
 	)
-	(gr_text "Beam Spring and Model F PCB Rev 3"
-		(at 38.975 9 0)
+	(gr_text "Beam Spring and Model F PCB Rev 1"
+		(at 39.3 9 0)
 		(layer "B.SilkS")
 		(uuid "675cfbd2-e790-4842-b368-f626e1795786")
 		(effects
@@ -19136,8 +19136,8 @@
 			(justify mirror)
 		)
 	)
-	(gr_text "The Leyden Jar\n"
-		(at 38.775 6.8 0)
+	(gr_text "The Leyden Jar V2\n"
+		(at 39.475 6.8 0)
 		(layer "B.SilkS")
 		(uuid "db583136-6f50-42ac-ae70-ae66b3d5574b")
 		(effects
