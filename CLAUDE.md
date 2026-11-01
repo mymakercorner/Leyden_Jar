@@ -115,7 +115,8 @@ Planned hardware changes from Rev 3:
     Accepted: a little back-feed if both split halves are on USB, or PS/2 and USB are both live. No extra ORing part.
   - VIN abs max 6.0 V. Check the SOT-26 pin numbering against the datasheet when drawing.
 - Flash: **W25Q64JVSSIM**, 8 MB, SOIC-8 208 mil (JLCPCB C5362615, extended, about $2.97; replaces the 2 MB USON-8
-  W25Q16). Footprint `Package_SO:SOIC-8_5.3x5.3mm_P1.27mm`, the default of U1's `Memory_Flash:W25Q32JVSS` symbol.
+  W25Q16). Footprint `Leyden_Jar:SOIC-8_5.3x5.3mm_P1.27mm`, a project copy of the default of U1's `Memory_Flash:W25Q32JVSS`
+  symbol.
   Changed on 2026-10-31 from the XSON-8 4x4 W25Q64JVXGIM (C6604688, $7.16) once the layout had room for the bigger
   package. Winbond W25Q is the family pico-sdk's default RP2350 boot2 targets. "IM" = QE bit 0 from the factory, set
   by boot2. Cheaper SOP-8 alternatives and their boot2 compatibility: `docs/rp2350_flash_compatibility_2026-10-28.md`.

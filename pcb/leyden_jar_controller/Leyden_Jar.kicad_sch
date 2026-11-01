@@ -23377,7 +23377,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-6"
+		(property "Footprint" "Leyden_Jar:SOT-23-6"
 			(at 328.93 95.25 0)
 			(hide yes)
 			(show_name no)
@@ -25553,7 +25553,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+		(property "Footprint" "Leyden_Jar:SOT-23-5"
 			(at 317.5 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -27460,7 +27460,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Package_TO_SOT_SMD:SOT-23-5"
+		(property "Footprint" "Leyden_Jar:SOT-23-5"
 			(at 240.03 64.77 0)
 			(hide yes)
 			(show_name no)
@@ -33763,7 +33763,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_SO:SOIC-8_5.3x5.3mm_P1.27mm"
+		(property "Footprint" "Leyden_Jar:SOIC-8_5.3x5.3mm_P1.27mm"
 			(at 105.41 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -37990,7 +37990,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_DFN_QFN:QFN-80-1EP_10x10mm_P0.4mm_EP3.4x3.4mm"
+		(property "Footprint" "Leyden_Jar:QFN-80-1EP_10x10mm_P0.4mm_EP3.4x3.4mm"
 			(at 469.9 146.05 0)
 			(hide yes)
 			(show_name no)
