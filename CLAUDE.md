@@ -123,7 +123,12 @@ Planned hardware changes from Rev 3:
   by boot2. Cheaper SOP-8 alternatives and their boot2 compatibility: `docs/rp2350_flash_compatibility_2026-10-28.md`.
 - Crystal: **ABM8-272-T3** (JLCPCB C20625731), the part the RP2350 datasheet recommends (12 MHz, CL 10 pF,
   ESR ≤ 50 Ω). Use the Pico 2 loading: 15 pF caps and a 1k series resistor on XOUT.
-- The matrix sense chain (LMV339s, DAC, ROW0-7 on GP0-7, COL0-15) stays untouched.
+- The matrix sense chain (LMV339s, DAC, ROW0-7 on GP0-7, COL0-15) stays untouched, except for two filter caps added
+  on 2026-11-02 (new compared with Rev 3): **C18** 4.7 nF on V_REF (C1538, basic; 3.2 kΩ source, τ 15 µs) and
+  **C30** 22 nF on ROW_PULLUP (C1532, basic; 880 Ω source, τ 19 µs). V_REF and the 0.39 V row bias both scale with
+  3V3, so 3V3 noise mostly cancels; the time constants must stay close (fit both or neither) or that cancellation
+  breaks. Upper limit for C18: the firmware waits 100 µs after each DAC write. PIO sampling (0.9 µs after each column
+  edge) is unaffected. Validate key detection on hardware.
 - New through-hole breakouts: rotary encoder (J9, with RC debounce: 10k pull-up + 100 nF per phase; no debounce on
   the encoder button), and a single-row 1x17 **breakout header J7** left of the USB-C connector that merges the free
   expansion pins, the split link (5V, GND, DATA) and the TFT display (SPI), so a ribbon cable can be soldered in one
