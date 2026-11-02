@@ -15700,17 +15700,6 @@
 	)
 	(wire
 		(pts
-			(xy 530.86 262.89)
-			(xy 530.86 260.35)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7716410e-23ff-40a8-992f-1c03a857bbdc")
-	)
-	(wire
-		(pts
 			(xy 454.66 241.3)
 			(xy 461.01 241.3)
 		)
@@ -18454,6 +18443,48 @@
 		)
 		(uuid "4bce6897-784f-4f9d-b76d-794fe06bec6a")
 	)
+	(wire
+		(pts
+			(xy 518.16 187.96)
+			(xy 518.16 185.42)
+		)
+		(uuid "bf68acf4-a8f3-4b90-9ca1-c9f4e94d590f")
+	)
+	(wire
+		(pts
+			(xy 518.16 193.04)
+			(xy 518.16 195.58)
+		)
+		(uuid "ac002b0f-b5e0-4287-85c7-4872f23e8d70")
+	)
+	(wire
+		(pts
+			(xy 530.86 187.96)
+			(xy 530.86 185.42)
+		)
+		(uuid "d59e5cc3-6dea-49df-97d5-f1da8427e91c")
+	)
+	(wire
+		(pts
+			(xy 530.86 193.04)
+			(xy 530.86 195.58)
+		)
+		(uuid "57be6626-8e96-4eea-a769-b5cccc1b1b82")
+	)
+	(wire
+		(pts
+			(xy 530.86 260.35)
+			(xy 527.05 260.35)
+		)
+		(uuid "b0e2d394-a41f-4fdd-906e-36584e8c0ff8")
+	)
+	(wire
+		(pts
+			(xy 527.05 260.35)
+			(xy 527.05 262.89)
+		)
+		(uuid "1ab0aa82-8bb3-4a54-aa8f-4da2cdc4ddd3")
+	)
 	(text "USB power switch (current limit, replaces the polyfuse)"
 		(at 291.846 80.772 0)
 		(effects
@@ -18800,16 +18831,6 @@
 			(justify right bottom)
 		)
 		(uuid "02567125-c197-4ea3-8d55-ee886aa1c4dd")
-	)
-	(label "TFT_MOSI"
-		(at 542.29 267.97 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "0754063e-3b9c-4abc-ac5b-4daac6d39351")
 	)
 	(label "COL8"
 		(at 78.74 307.34 180)
@@ -19470,16 +19491,6 @@
 			(justify right bottom)
 		)
 		(uuid "66a0f18a-61db-4270-8eae-fa3a94c4a0e5")
-	)
-	(label "TFT_SCK"
-		(at 542.29 265.43 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "673a4de7-70bf-4bfa-a408-5d4fca4dbcd2")
 	)
 	(label "A_ROW4"
 		(at 73.66 271.78 180)
@@ -20580,6 +20591,66 @@
 			(justify right bottom)
 		)
 		(uuid "ff7d1110-48fb-40f3-bb40-465b2540af1d")
+	)
+	(label "TFT_SCK_J7"
+		(at 542.29 265.43 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "225cbf67-a65b-43af-9972-268c5b927c22")
+	)
+	(label "TFT_MOSI_J7"
+		(at 542.29 267.97 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right bottom)
+		)
+		(uuid "17160782-5b43-4836-8945-86f2c73c3a42")
+	)
+	(label "TFT_SCK"
+		(at 518.16 185.42 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "931bc3c3-09f7-47f7-a5c4-10bf5ef7f283")
+	)
+	(label "TFT_SCK_J7"
+		(at 518.16 195.58 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "74f94e55-27be-41e7-ac20-3c07566a8b66")
+	)
+	(label "TFT_MOSI"
+		(at 530.86 185.42 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "47106e40-5f2c-4868-a032-3cab8a5e54ba")
+	)
+	(label "TFT_MOSI_J7"
+		(at 530.86 195.58 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "bd8319e0-fb33-42c3-9b26-65d3942afb41")
 	)
 	(symbol
 		(lib_id "power:+5V")
@@ -22660,84 +22731,6 @@
 			(project "Leyden_Jar"
 				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
 					(reference "#PWR206")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 530.86 262.89 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "16756a8e-0a33-451e-b9fb-e50886e19db1")
-		(property "Reference" "#PWR037"
-			(at 530.86 269.24 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 530.86 266.7 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 530.86 262.89 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 530.86 262.89 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 530.86 262.89 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(body_style 1)
-		(in_pos_files yes)
-		(pin "1"
-			(uuid "9da47603-24f6-43e0-b767-b02e336ccaa8")
-		)
-		(instances
-			(project "Leyden_Jar"
-				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
-					(reference "#PWR037")
 					(unit 1)
 				)
 			)
@@ -26531,7 +26524,7 @@
 			)
 		)
 		(property "Value" "+3V3"
-			(at 538.734 262.89 0)
+			(at 536.575 262.38 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -37665,6 +37658,206 @@
 			(project "Leyden_Jar"
 				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
 					(reference "#PWR042")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_Small")
+		(at 518.16 190.5 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "f68627bb-ba56-48fd-943f-8a1eda43f23e")
+		(property "Reference" "R14"
+			(at 519.938 190.5 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "33"
+			(at 518.16 190.5 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 518.16 190.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 518.16 190.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor, small symbol"
+			(at 518.16 190.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25105"
+			(at 518.16 190.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Leyden_Jar"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "R14")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_Small")
+		(at 530.86 190.5 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "176cc2f1-9bd0-402c-a027-43adf53e6954")
+		(property "Reference" "R15"
+			(at 532.638 190.5 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "33"
+			(at 530.86 190.5 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 530.86 190.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 530.86 190.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor, small symbol"
+			(at 530.86 190.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C25105"
+			(at 530.86 190.5 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Leyden_Jar"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "R15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 527.05 262.89 0)
+		(unit 1)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "502229c0-d175-4afb-9146-c3c238edfed8")
+		(property "Reference" "#PWR037"
+			(at 527.05 269.24 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 527.05 266.7 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 527.05 262.89 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 527.05 262.89 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 527.05 262.89 0)
+			(hide yes)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(instances
+			(project "Leyden_Jar"
+				(path "/e63e39d7-6ac0-4ffd-8aa3-1841a4541b55"
+					(reference "#PWR037")
 					(unit 1)
 				)
 			)

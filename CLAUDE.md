@@ -190,7 +190,12 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
   it steady or with fast PWM. Optional later: a ferrite bead plus about 10 µF on the display VCC near J7.
   BLK is GP36 (PWM); on most modules it only switches a transistor.
 - GP33 is an SPI0 function pin, not SPI1. That's harmless if CS is driven as a plain GPIO. No free pin in the
-  plan has the SPI1 RX function, so the display must work with MISO unused.
+  plan has the SPI1 RX function, so the display must work with MISO unused (QMK: `#define SPI_MISO_PIN NO_PIN`, or
+  it defaults to the STM32 pin B14).
+- Display SPI series resistors (added 2026-11-02): **R14** on TFT_SCK and **R15** on TFT_MOSI, 33 Ω 0402 (C25105,
+  basic), source termination for the ribbon cable to the display. The J7 side nets are `TFT_SCK_J7` / `TFT_MOSI_J7`.
+  Any position between U5 and J7 works (the on-board trace is electrically short). Firmware should also drop
+  `PAL_RP_PAD_SLEWFAST` from `SPI_SCK_PAL_MODE` / `SPI_MOSI_PAL_MODE` (QMK's RP default is fast slew, 4 mA).
 - PIO blocks see a 32-GPIO window (base 0 or 16). Current firmware: PIO0 = matrix scanner, PIO1 = PS/2
   (its program fills all 32 instructions). The split serial on GP45 therefore needs **PIO2** with GPIOBASE 16,
   not PIO0 as the plan's firmware section says.
