@@ -914,7 +914,7 @@
         "pattern": "/ENCODER_B"
       },
       {
-        "netclass": "Fine",
+        "netclass": "Signal",
         "pattern": "/UART_DATA"
       },
       {
