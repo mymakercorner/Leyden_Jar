@@ -9876,13 +9876,14 @@
 			(uuid "9311e600-f3bb-412a-b98f-b59c16869ece")
 		)
 		(fp_text user "${REFERENCE}"
-			(at 0 -1.2 0)
+			(at 0 -0.55 0)
 			(layer "F.Fab")
 			(uuid "02ba0625-7036-45c7-b04d-3f8b29e2e2a3")
 			(effects
 				(font
-					(size 1 1)
-					(thickness 0.15)
+					(size 0.3 0.3)
+					(thickness 0.06)
+					(bold yes)
 				)
 			)
 		)
@@ -10683,7 +10684,7 @@
 		(attr through_hole exclude_from_pos_files exclude_from_bom)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_text user "${REFERENCE}"
-			(at 0 8.5 0)
+			(at 0 3.75 0)
 			(unlocked yes)
 			(layer "F.Fab")
 			(uuid "570c8e76-a1eb-418a-a242-81d554bd6b26")
@@ -17798,7 +17799,7 @@
 		(attr through_hole exclude_from_pos_files exclude_from_bom)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_text user "${REFERENCE}"
-			(at 0 8.5 0)
+			(at 0.05 3.75 0)
 			(unlocked yes)
 			(layer "F.Fab")
 			(uuid "21f3b71b-2019-40c4-bb4c-73e8811a54f6")
