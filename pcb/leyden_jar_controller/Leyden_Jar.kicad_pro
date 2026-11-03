@@ -886,10 +886,6 @@
         "pattern": "Net-(U8-ILIM)"
       },
       {
-        "netclass": "Default",
-        "pattern": "/TFT_VCC"
-      },
-      {
         "netclass": "Signal",
         "pattern": "/PS2_ENABLE"
       },
@@ -976,6 +972,14 @@
       {
         "netclass": "PowerLV",
         "pattern": "+3V3"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/TFT_SCK_J7"
+      },
+      {
+        "netclass": "Signal",
+        "pattern": "/TFT_MOSI_J7"
       }
     ]
   },
