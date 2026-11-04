@@ -138,7 +138,7 @@ Planned hardware changes from Rev 3:
   | Pin | Net | Pin | Net |
   |---|---|---|---|
   | 1 | 3V3 | 10 | GND (display) |
-  | 2-5 | EXP_GP32, EXP_GP41, EXP_GP46, EXP_GP47 | 11 | 3V3 (display VCC) |
+  | 2-5 | EXP_GP47, EXP_GP46, EXP_GP41, EXP_GP32 (as on the PCB, checked 2026-11-04) | 11 | 3V3 (display VCC) |
   | 6 | GND | 12 / 13 | TFT_SCK / TFT_MOSI |
   | 7 | +5V (split) | 14 / 15 | TFT_RST / TFT_DC |
   | 8 | GND (split) | 16 / 17 | TFT_CS / TFT_BLK |
@@ -172,7 +172,7 @@ Planned GPIO map (Rev 3 assignments unchanged unless listed):
 | 36 | TFT_BLK | backlight, PWM |
 | 37 / 38 / 39 | ENCODER_A / ENCODER_B / ENCODER_BUTTON | |
 | 40 | PS2_ENABLE | was PCA9557 |
-| 42 / 43 / 44 | LED0 / LED1 / LED2 | were PCA9557 LED0-2 (on J2); schematic keeps the J2 net names |
+| 42 / 43 / 44 | LED2 / LED1 / LED0 | were PCA9557 LED0-2 (on J2); schematic keeps the J2 net names; reverse order (checked on U5's pads 2026-11-04) |
 | 45 | UART_DATA | split link, half-duplex PIO serial |
 | 32, 41, 46, 47 | free | through holes for expansion |
 
