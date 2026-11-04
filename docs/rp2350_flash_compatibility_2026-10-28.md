@@ -7,11 +7,11 @@ Oct 28, 2026 · Rico
 Raspberry Pi officially supports any 3.3 V SPI NOR flash up to 16 MB that has the standard 03h read, but its boot code
 runs fast quad mode only on three families: Winbond W25Q (the default), Renesas/Adesto AT25SF and ISSI IS25LP. Puya
 P25Q64SH, Boya BY25Q64ES and Fudan FM25Q64 are not listed by Raspberry Pi, but their datasheets show they work with the
-default Winbond boot code. GigaDevice GD25Q64E needs a different boot code.
+default Winbond boot code. GigaDevice GD25Q64E and Zetta ZD25Q64D need a different boot code.
 
 - **Officially supported, quad:** Winbond W25Q, Renesas/Adesto AT25SF, ISSI IS25LP.
 - **Compatible with the default boot code (datasheet-checked):** Puya P25Q64SH, Boya BY25Q64ES, Fudan FM25Q64.
-- **Needs non-default boot code:** GigaDevice GD25Q64E.
+- **Needs non-default boot code:** GigaDevice GD25Q64E, Zetta ZD25Q64D (added 4 Nov 2026).
 - **Not checked:** Macronix, XTX, Zbit, XMC.
 
 For Leyden Jar V2 (8 MB, 3.3 V), the cheapest compatible part is the Puya P25Q64SH-SSH-IT at $0.76 in SOP-8, against
@@ -66,9 +66,22 @@ datasheet.
 | Boya BY25Q64ES | BY25Q64ESSIG | SR2 can be written by 01h or 31h; QE default 0 ([datasheet Rev 2.9](https://dfsimg1.hqewimg.com/group6/M00/06/85/wKhk6WpQPxKAblswAEnnmtKnVYs835.pdf), pp. 17 and 29) | pico-sdk default | Compatible, not listed by Raspberry Pi |
 | Fudan FM25Q64 | FM25Q64AI3 | 01h takes 8 or 16 data bits; QE = S9, default 0; an 8-bit write clears QE ([datasheet Ver 1.0](https://mt-system.ru/upload/8.pdf), pp. 13 and 23) | pico-sdk default (it sends 16 bits) | Compatible, not listed by Raspberry Pi |
 | GigaDevice GD25Q64E | GD25Q64ETIGR, GD25Q64EQIGR | 01h writes SR1 only and is ignored unless CS# rises after 8 bits; QE = S9 via 31h, default 0 ([datasheet Rev 1.4](https://www.gigadevice.com.cn/Public/Uploads/uploadfile/files/20220714/DS-00484-GD25Q64E-Rev1.4.pdf), pp. 13 and 19) | **Not** the default. The AT25SF128A boot code uses the same 31h write and should fit, but that is untested | Needs non-default boot code |
+| Zetta ZD25Q64D | ZD25Q64DSIGT | 01h writes SR1 only and is not executed unless CS# rises after 8 bits; QE = S9 via 31h; status registers ship as 00h ([datasheet](https://datasheet.lcsc.com/datasheet/pdf/cc7cb1d7611dcd5a83b8f58cf15444c9.pdf?productCode=C55199021), pp. 11-12, 26 and 73) | **Not** the default. The AT25SF128A boot code (35h read, 31h write, EBh with M5-4 = 10, 2 mode + 4 dummy clocks) matches the datasheet but is untested | Needs non-default boot code |
 | Macronix MX25L, XTX XT25F, Zbit ZB25VQ, XMC XM25QH | — | not checked: datasheets not obtained | serial mode only until checked | Unverified |
 | 1.8 V parts (W25Q64JW, GD25LQ64E, ...) | — | — | — | Not usable on Leyden Jar V2: its QSPI runs at 3.3 V |
 | Anything above 16 MB (W25Q256, ...) | — | — | — | Not supported: the RP2350 uses 24-bit addressing, 16 MB maximum |
+
+**Confidence (added 4 Nov 2026).** The default boot code reads SR2 with `35h` and compares it with exactly `02h`,
+writes `06h` + `01h 00h 02h` if needed, polls `05h`, then reads with `EBh`, mode byte `A0h` (M5-4 = 10) and 4 dummy
+clocks at 75 MHz (`PICO_FLASH_SPI_CLKDIV` 2 at 150 MHz). No RP2040 or RP2350 board using Boya or Fudan flash was found,
+so both ratings rest on datasheets only.
+
+- **Boya BY25Q64ES: high.** Every step is described Winbond-style (Rev 2.9, pp. 15, 29, 36); all SR2 bits ship as 0, so
+  SR2 reads exactly `02h` after the first boot; fast read up to 120 MHz.
+- **Fudan FM25Q64: medium.** Every step matches (`EBh` with 4 dummy clocks, 104 MHz), but the only datasheet found is a
+  third-party copy (Ver 1.0) with copy errors, and SR2 also holds the DRV1/DRV0 drive bits (factory value not stated)
+  and a read-only ERR bit. A non-zero DRV makes the first boot rewrite SR2 to 100% drive (harmless); a set ERR bit
+  makes the boot code rewrite the status registers on every boot.
 
 Winbond's -IM parts, like the current U1, leave QE off from the factory. That doesn't matter, because the default boot
 code sets it. Raspberry Pi also warns that a chip must leave continuous-read mode on the bootrom's reset sequence, or the
@@ -93,6 +106,11 @@ compatible 8 MB part in a 4x4 mm package costs $2.23 or more. Prices are for 1 p
 | [GD25Q64ESIGR](https://jlcpcb.com/partdetail/C2831359) (GigaDevice) | SOP-8 208 mil | no | JLCPCB C2831359 | 1.00 | 17,512 |
 | [GD25Q64ETIGR](https://jlcpcb.com/partdetail/C2976334) (GigaDevice) | SOP-8 150 mil | no | JLCPCB C2976334 | 1.30 | 9,305 |
 | [GD25Q64EQIGR](https://www.digikey.com/en/products/detail/gigadevice-electronics-singapore-pte-ltd/GD25Q64EQIGR/20531989) (GigaDevice) | USON-8 4x4 | no | DigiKey | 2.23 | 5,774, purchase limit |
+| [ZD25Q64DSIGT](https://jlcpcb.com/partdetail/Zetta-ZD25Q64DSIGT/C55199021) (Zetta) | SOP-8 208 mil | no | JLCPCB C55199021 | not shown | not shown |
+
+The Zetta ZD25Q64DSIGT is the part the original Rev 4 plan named. It was checked on 4 Nov 2026: its pinout and
+208 mil outline (body 5.17 x 5.22 mm, 7.70-8.10 mm across the leads, datasheet p. 84) match the W25Q64JVSSIM, so it
+fits U1's footprint unchanged. Only the boot code differs. The JLCPCB page (extended part) showed no price or stock.
 
 Puya's datasheet also lists the P25Q64SH in USON 4x4 and 3x2 mm, but no distributor I checked stocks those versions.
 
@@ -143,6 +161,7 @@ The smallest is the Pico 2's own Winbond W25Q32RVXHJQ, XSON 2x3 mm at $3.90. Pri
 - Boya, [BY25Q32ES datasheet](https://cdn.sparkfun.com/assets/2/0/b/3/1/2024-ESP-01S_Flash-BY25Q32ES.pdf)
 - Puya, [Migration from P25Q32H to P25Q32SH application note](https://www.lcsc.com/datasheet/C2833294.pdf)
 - Fudan, [FM25Q64 datasheet Ver 1.0](https://mt-system.ru/upload/8.pdf)
+- Zetta, [ZD25Q64D datasheet (LCSC C55199021)](https://datasheet.lcsc.com/datasheet/pdf/cc7cb1d7611dcd5a83b8f58cf15444c9.pdf?productCode=C55199021)
 - QMK, [issue #25881: RP2350 support](https://github.com/qmk/qmk_firmware/issues/25881)
 - Prices and stock: [JLCPCB parts library](https://jlcpcb.com/parts), [LCSC](https://www.lcsc.com/search?q=P25Q64SH),
   DigiKey pages linked in the table, read on 28 Oct 2026
