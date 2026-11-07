@@ -130,21 +130,25 @@ Planned hardware changes from Rev 3:
   breaks. Upper limit for C18: the firmware waits 100 µs after each DAC write. PIO sampling (0.9 µs after each column
   edge) is unaffected. Validate key detection on hardware.
 - New through-hole breakouts: rotary encoder (J9, with RC debounce: 10k pull-up + 100 nF per phase; no debounce on
-  the encoder button), and a single-row 1x17 **breakout header J7** left of the USB-C connector that merges the free
-  expansion pins, the split link (5V, GND, DATA) and the TFT display (SPI), so a ribbon cable can be soldered in one
-  row (connector-placement feedback, 2026-10-26; J8 and J10 no longer exist). J7 pinout, blocks kept in their
-  original order with a GND per block:
+  the encoder button), and a single-row 1x18 **breakout header J7** left of the USB-C connector that merges the free
+  expansion pins, two split/serial ports (5V, GND, DATA each) and the TFT display (SPI), so a ribbon cable can be
+  soldered in one row (connector-placement feedback, 2026-10-26; J8 and J10 no longer exist). The second serial port
+  (GP32) was added on 2026-11-07 so a split-keyboard master can also link a third board (e.g. an F50, custom
+  firmware); both ports use the same pin order, so a cable in the wrong port does no harm. J7 pinout:
 
   | Pin | Net | Pin | Net |
   |---|---|---|---|
-  | 1 | 3V3 | 10 | GND (display) |
-  | 2-5 | EXP_GP47, EXP_GP46, EXP_GP41, EXP_GP32 (as on the PCB, checked 2026-11-04) | 11 | 3V3 (display VCC) |
-  | 6 | GND | 12 / 13 | TFT_SCK / TFT_MOSI |
-  | 7 | +5V (split) | 14 / 15 | TFT_RST / TFT_DC |
-  | 8 | GND (split) | 16 / 17 | TFT_CS / TFT_BLK |
-  | 9 | UART_DATA (split) | | |
+  | 1 | 3V3 | 10 | UART_DATA (port 1, GP45, QMK split) |
+  | 2-4 | EXP_GP47, EXP_GP46, EXP_GP41 | 11 | GND (display) |
+  | 5 | +5V (port 2) | 12 | 3V3 (display VCC) |
+  | 6 | GND (port 2) | 13 / 14 | TFT_SCK / TFT_MOSI |
+  | 7 | UART_DATA2 (port 2, GP32) | 15 / 16 | TFT_RST / TFT_DC |
+  | 8 / 9 | +5V / GND (port 1) | 17 / 18 | TFT_CS / TFT_BLK |
 
-  Pins 10-17 keep the ST7789 module order, so a display can plug straight onto them.
+  Pins 11-18 keep the ST7789 module order, so a display can plug straight onto them. Footprint
+  `Leyden_Jar:SpiDispPlusExp_1x18_P2.54mm_Vertical`: square pads 6 and 9 (port GNDs) need a 45° thermal spoke angle,
+  otherwise the board edge and the 2.54 mm neighbours leave them one spoke (starved_thermal DRC). Courtyard trimmed
+  to -1.72..44.90 so it clears J1's. On the board J7 is at x 11.6 (pad 1) to 54.78 (pad 18), y 1.4.
 - The 18 column 1k series resistors (Rev 3: R14-R16, R18, R20-R24, R26, R28-R32, R34, R47, R48) are removed:
   COLn goes straight from the MCU to J2. This frees the band above J2 so the RP2350B can sit lower. The 47k
   A_ROW bias resistors (R7, R9, R13, R19, R27, R35, R37, R39, to `ROW_PULLUP`, a 7.5k/1k divider from 3V3 at about
@@ -173,8 +177,9 @@ Planned GPIO map (Rev 3 assignments unchanged unless listed):
 | 37 / 38 / 39 | ENCODER_A / ENCODER_B / ENCODER_BUTTON | |
 | 40 | PS2_ENABLE | was PCA9557 |
 | 42 / 43 / 44 | LED2 / LED1 / LED0 | were PCA9557 LED0-2 (on J2); schematic keeps the J2 net names; reverse order (checked on U5's pads 2026-11-04) |
-| 45 | UART_DATA | split link, half-duplex PIO serial |
-| 32, 41, 46, 47 | free | through holes for expansion |
+| 45 | UART_DATA | split link (J7 port 1), half-duplex PIO serial |
+| 32 | UART_DATA2 | second serial link (J7 port 2, added 2026-11-07), half-duplex PIO serial, custom firmware |
+| 41, 46, 47 | free | through holes for expansion (J7 pins 2-4) |
 
 Points to verify while implementing (against the RP2350 datasheet / hardware design guide / QMK docs):
 - VREG_LX in datasheet Figure 24 (page 410) looks unconnected but the figure couldn't be rendered to confirm.
@@ -182,7 +187,7 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
   MCP4716 datasheet wants for VREF when VDD is the selected reference.
 - J9 encoder, 1x5 in module order: 1 ENCODER_A, 2 ENCODER_B, 3 ENCODER_BUTTON, 4 3V3, 5 GND. RC debounce on A/B
   only (10k pull-up + 100 nF each); the button uses the internal pull-up.
-- Display pins (J7 10-17, 8-pin ST7789 module order: GND, VCC, SCL, SDA, RES, DC, CS, BLK): VCC is **3V3 only**
+- Display pins (J7 11-18, 8-pin ST7789 module order: GND, VCC, SCL, SDA, RES, DC, CS, BLK): VCC is **3V3 only**
   (decided 2026-11-01; the 3V3/+5V solder jumper JP1 was removed to avoid routing +5V to it). Every ST7789 module
   runs on 3.3 V: the controller's supply is 3.3 V at most and its inputs aren't 5 V tolerant; modules with an
   onboard regulator accept 3.3-5 V (about 3.0-3.1 V reaches the controller at 3.3 V in), the others 3.3 V only.
@@ -198,7 +203,8 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
   `PAL_RP_PAD_SLEWFAST` from `SPI_SCK_PAL_MODE` / `SPI_MOSI_PAL_MODE` (QMK's RP default is fast slew, 4 mA).
 - PIO blocks see a 32-GPIO window (base 0 or 16). Current firmware: PIO0 = matrix scanner, PIO1 = PS/2
   (its program fills all 32 instructions). The split serial on GP45 therefore needs **PIO2** with GPIOBASE 16,
-  not PIO0 as the plan's firmware section says.
+  not PIO0 as the plan's firmware section says. The second link on GP32 fits in the same PIO2 (2 state machines and
+  13 instructions per half-duplex link, so both links use all 4 SMs and 26 of 32 instructions).
 - PS/2 pin order is free: the firmware patches the `ps2out` program to wait on an absolute GPIO (`0x2080 | pin`),
   so clock = data - 1 on J4 works. On the RP2350 that index is relative to the PIO's GPIOBASE, which is fine
   while PS/2 stays below GP32.
@@ -241,8 +247,9 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
 - Split DATA: **no series resistor** (or a 0R footprint). QMK's RP PIO half-duplex driver has the receiver drive the
   line high at 2 mA while the transmitter pulls low at 12 mA. With RP2350 worst-case levels (VOH 2.62 V at 2 mA,
   VOL 0.5 V at 12 mA, VIL 0.8 V), the low level breaks at about 33R per board. Put ESD protection at the connector.
-- Split link (J7 pins 7-9): 5V pin on the +5V rail (after the AP22653), so one board on USB powers both through its own
-  current limit. ESD: a single bidirectional TVS on DATA, D1 ESD9B3.3ST5G (C96512, SOD-923, 3.3 V working).
+- Split links (J7 pins 8-10 = port 1, pins 5-7 = port 2): 5V pins on the +5V rail (after the AP22653), so one board on
+  USB powers the others through its own current limit. ESD: one bidirectional TVS per DATA line, ESD9B3.3ST5G
+  (C96512, SOD-923, 3.3 V working, no orientation): D1 on UART_DATA, D2 on UART_DATA2.
   The 5V pin needs no TVS: the +5V bulk capacitance absorbs an ESD discharge. Don't move the split 5V to VBUS (it would
   tie two hosts' VBUS together, bypass the AP22653 current limit and leave live VBUS on an unplugged USB-C port).
   The PS/2 host's 5 V also lands on +5V (J4 pin 1, via the daughterboard's MIC2009 + Schottky).
@@ -258,8 +265,8 @@ block still says Rev 3.
 SWD/I2C: the V2 JST SH connectors (J5 Qwiic 4-pin, J6 SWD 3-pin, bottom side) were reverted on 2026-10-26 after
 connector-placement feedback. **J3** is back: Rev 3's 2x3 SWD/I2C header with the same pinout and footprint
 (`Leyden_Jar:I2cSwd_2x03_P2.54mm_Horizontal`, not assembled). On the board it sits below the J7 breakout row with
-pad 1 vertically aligned on J7 pad 1: footprint origin (12.821, 5.08), pad 1 at (12.761, 5.06), body pointing +x to
-x 25.9.
+pad 1 under J7 pad 1: footprint origin (11.76, 5.08), pad 1 at (11.70, 5.06) (0.1 mm right of J7 pad 1 since the
+2026-11-07 J7 move), body pointing +x to x 24.8.
 
 RUN/BOOT buttons (2026-10-26 feedback): all four B3U-1000P are back as in Rev 3, a top-side pair (SW3 // SW1 on
 RUN, SW4 // SW2 on USB_BOOT, F.Cu) and a bottom-side pair (SW1, SW2, B.Cu) at the same XY. Vertical (rot 90),
