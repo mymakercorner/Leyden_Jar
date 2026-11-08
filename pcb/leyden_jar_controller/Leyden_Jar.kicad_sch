@@ -22222,7 +22222,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 346.71 101.6 0)
 			(hide yes)
 			(show_name no)
@@ -22539,7 +22539,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 283.21 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -22631,7 +22631,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 480.06 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -22947,7 +22947,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 449.58 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -23039,7 +23039,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 533.4 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -23218,7 +23218,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 322.58 350.52 0)
 			(hide yes)
 			(show_name no)
@@ -23579,7 +23579,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 116.84 137.16 0)
 			(hide yes)
 			(show_name no)
@@ -23907,7 +23907,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 322.58 340.36 0)
 			(hide yes)
 			(show_name no)
@@ -24076,7 +24076,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 320.04 171.45 0)
 			(hide yes)
 			(show_name no)
@@ -24165,7 +24165,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 530.86 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -24410,7 +24410,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 283.21 292.1 0)
 			(hide yes)
 			(show_name no)
@@ -24502,7 +24502,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 441.96 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -25230,7 +25230,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 398.78 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -25473,7 +25473,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SOD-923"
+		(property "Footprint" "Leyden_Jar:D_SOD-923"
 			(at 398.78 281.94 0)
 			(hide yes)
 			(show_name no)
@@ -25563,7 +25563,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 166.37 58.42 0)
 			(hide yes)
 			(show_name no)
@@ -25654,7 +25654,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 309.88 100.33 0)
 			(hide yes)
 			(show_name no)
@@ -25901,7 +25901,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+		(property "Footprint" "Leyden_Jar:R_0805_2012Metric"
 			(at 151.892 96.52 90)
 			(hide yes)
 			(show_name no)
@@ -26372,7 +26372,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 320.04 156.21 0)
 			(hide yes)
 			(show_name no)
@@ -26461,7 +26461,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 543.56 191.77 0)
 			(hide yes)
 			(show_name no)
@@ -26550,7 +26550,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 243.84 222.25 0)
 			(hide yes)
 			(show_name no)
@@ -26717,7 +26717,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 135.89 298.45 0)
 			(hide yes)
 			(show_name no)
@@ -27039,7 +27039,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 283.21 245.11 0)
 			(hide yes)
 			(show_name no)
@@ -27319,7 +27319,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 299.72 57.15 0)
 			(hide yes)
 			(show_name no)
@@ -27887,7 +27887,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 419.1 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -28191,7 +28191,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 283.21 261.62 0)
 			(hide yes)
 			(show_name no)
@@ -28280,7 +28280,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SOD-923"
+		(property "Footprint" "Leyden_Jar:D_SOD-923"
 			(at 411.48 281.94 0)
 			(hide yes)
 			(show_name no)
@@ -28449,7 +28449,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 320.04 256.54 0)
 			(hide yes)
 			(show_name no)
@@ -28695,7 +28695,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 176.53 240.03 0)
 			(hide yes)
 			(show_name no)
@@ -28864,7 +28864,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 397.51 234.95 0)
 			(hide yes)
 			(show_name no)
@@ -29107,7 +29107,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 72.39 160.02 0)
 			(hide yes)
 			(show_name no)
@@ -29198,7 +29198,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 320.04 271.78 0)
 			(hide yes)
 			(show_name no)
@@ -29290,7 +29290,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 472.44 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -29457,7 +29457,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 231.14 256.54 0)
 			(hide yes)
 			(show_name no)
@@ -29548,7 +29548,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 251.46 222.25 0)
 			(hide yes)
 			(show_name no)
@@ -30170,7 +30170,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 487.68 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -30409,7 +30409,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 426.72 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -30975,7 +30975,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 354.33 100.33 0)
 			(hide yes)
 			(show_name no)
@@ -31291,7 +31291,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 320.04 139.7 0)
 			(hide yes)
 			(show_name no)
@@ -31383,7 +31383,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 130.81 220.98 0)
 			(hide yes)
 			(show_name no)
@@ -31698,7 +31698,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 320.04 186.69 0)
 			(hide yes)
 			(show_name no)
@@ -31941,7 +31941,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 250.19 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -32109,7 +32109,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 320.04 240.03 0)
 			(hide yes)
 			(show_name no)
@@ -32200,7 +32200,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 162.56 234.95 0)
 			(hide yes)
 			(show_name no)
@@ -32522,7 +32522,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 553.72 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -33169,7 +33169,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 223.52 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -33412,7 +33412,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 320.04 287.02 0)
 			(hide yes)
 			(show_name no)
@@ -33580,7 +33580,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 243.84 212.09 0)
 			(hide yes)
 			(show_name no)
@@ -33671,7 +33671,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 283.21 276.86 0)
 			(hide yes)
 			(show_name no)
@@ -33762,7 +33762,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 81.28 58.42 0)
 			(hide yes)
 			(show_name no)
@@ -33931,7 +33931,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Leyden_Jar:C_0805_2012Metric"
 			(at 260.35 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -34100,7 +34100,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Leyden_Jar:C_0805_2012Metric"
 			(at 365.76 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -34192,7 +34192,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Leyden_Jar:C_0805_2012Metric"
 			(at 218.44 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -34437,7 +34437,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 335.28 57.15 0)
 			(hide yes)
 			(show_name no)
@@ -34822,7 +34822,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 81.28 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -34913,7 +34913,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 95.25 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -35151,7 +35151,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 495.3 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -35473,7 +35473,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 172.72 240.03 0)
 			(hide yes)
 			(show_name no)
@@ -35565,7 +35565,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 457.2 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -35956,7 +35956,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 283.21 176.53 0)
 			(hide yes)
 			(show_name no)
@@ -36864,7 +36864,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 411.48 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -36956,7 +36956,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 228.6 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -37194,7 +37194,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 299.72 350.52 0)
 			(hide yes)
 			(show_name no)
@@ -37284,7 +37284,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 166.37 53.34 0)
 			(hide yes)
 			(show_name no)
@@ -37375,7 +37375,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 283.21 161.29 0)
 			(hide yes)
 			(show_name no)
@@ -37694,7 +37694,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 549.91 191.77 0)
 			(hide yes)
 			(show_name no)
@@ -37786,7 +37786,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 464.82 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -37954,7 +37954,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 299.72 340.36 0)
 			(hide yes)
 			(show_name no)
@@ -38123,7 +38123,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 513.08 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -38520,7 +38520,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 283.21 191.77 0)
 			(hide yes)
 			(show_name no)
@@ -38685,7 +38685,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:C_0402_1005Metric"
 			(at 223.52 88.9 0)
 			(hide yes)
 			(show_name no)
@@ -38774,7 +38774,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Leyden_Jar:R_0402_1005Metric"
 			(at 518.16 190.5 0)
 			(hide yes)
 			(show_name no)
