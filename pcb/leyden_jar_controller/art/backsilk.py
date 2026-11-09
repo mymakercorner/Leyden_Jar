@@ -372,21 +372,32 @@ J9_TAB_X0 = BX - L
 # J2 (switch matrix, bottom edge): group brackets above the pads, white tabs standing on them, no per-pin codes
 j2x = [VX(1.60 + 2.54 * i) for i in range(33)]
 J2_LINE, J2_TICK = 23.4, 23.75                   # square pad tops at 24.05
-def bracket_up(first, last, name, min_e=0.6):
-    """Pins first..last (0-based, pin 1 = index 0, on the view right). Tab stands on the line."""
-    w = tw(name, TAB_T, knocked=True) + 0.9
+# Pin 1 is on the view right, so every group reads from its highest index (left) to index 0 (right): the index
+# of each end pin stands on the bracket line right above that pin, the group name sits in a tab in the middle.
+J2_IDX_Y = J2_LINE - 0.075 - 0.17 - CODE_H / 2   # index codes >= 0.15 mm above the bracket line (round digits overshoot)
+
+def bracket_up(first, last, name=None, idx=None, min_e=0.6):
+    """Pins first..last (0-based, pin 1 = index 0, on the view right). Tab stands on the line.
+    idx = (label above pin `first`, label above pin `last`)."""
+    w = tw(name, TAB_T, knocked=True) + 0.9 if name else 0.0
     span = j2x[first] - j2x[last]
     e = max(min_e, (w + 0.6 - span) / 2)
     xr, xl = j2x[first] + e, j2x[last] - e
-    poly(rounded([(xr, J2_TICK), (xr, J2_LINE), (xl, J2_LINE), (xl, J2_TICK)], 0.3), label=f"J2 bracket {name}")
-    xc, h = (xr + xl) / 2, TAB_H
-    silk.append((rbox(xc - w / 2, J2_LINE - h, xc + w / 2, J2_LINE, 0.3, "tl tr"), f"J2 tab {name}"))
-    text(xc, J2_LINE - h / 2, name, h=TAB_T, fill=MASK, label=f"J2 tab {name}")
+    lab = name or "/".join(idx)
+    poly(rounded([(xr, J2_TICK), (xr, J2_LINE), (xl, J2_LINE), (xl, J2_TICK)], 0.3), label=f"J2 bracket {lab}")
+    if name:
+        xc, h = (xr + xl) / 2, TAB_H
+        silk.append((rbox(xc - w / 2, J2_LINE - h, xc + w / 2, J2_LINE, 0.3, "tl tr"), f"J2 tab {name}"))
+        text(xc, J2_LINE - h / 2, name, h=TAB_T, fill=MASK, label=f"J2 tab {name}")
+    if idx:
+        text(j2x[first], J2_IDX_Y, idx[0], label=f"J2 idx {lab} {idx[0]}")
+        text(j2x[last], J2_IDX_Y, idx[1], label=f"J2 idx {lab} {idx[1]}")
     return xl, xr
 
 ends = [bracket_up(0, 1, "GND"),
-        bracket_up(2, 9, "R0-7"), bracket_up(10, 11, "GND"),
-        bracket_up(12, 27, "C0-15"), bracket_up(28, 29, "C16-17"), bracket_up(30, 32, "LED")]
+        bracket_up(2, 9, "ROW", ("0", "7")), bracket_up(10, 11, "GND"),
+        bracket_up(12, 27, "COL", ("0", "15")), bracket_up(28, 29, idx=("16", "17")),
+        bracket_up(30, 32, "LED", ("0", "2"))]
 for (l1, r1), (l2, r2) in zip(ends, ends[1:]):
     if l1 - r2 < 0.5:
         print(f"J2 brackets only {l1 - r2:.2f} mm apart near view x {l1:.1f}")
