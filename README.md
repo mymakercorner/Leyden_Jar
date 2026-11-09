@@ -56,12 +56,17 @@ In order to give tribute to Tom Wong-Cornall, the inventor of the IBM Capsense U
 
 ### Exception for some 3D models
 
-Two 3D model files, taken from SnapEDA website, that are using the [Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA)](https://creativecommons.org/licenses/by-sa/4.0/)  with the [Design Exception 1.0 licence](https://www.snapeda.com/about/FAQ/#designexception):
-* B3U-3000P--3DModel-STEP-56544.STEP
+One 3D model file, taken from SnapEDA website, that is using the [Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA)](https://creativecommons.org/licenses/by-sa/4.0/)  with the [Design Exception 1.0 licence](https://www.snapeda.com/about/FAQ/#designexception):
 * TYPE-C-31-M-12--3DModel-STEP-56544.STEP
 
 One 3D model file, extracted from Raspberry Pi's RP2350B minimal KiCad design (Copyright (c) 2026 Raspberry Pi Ltd), that is using the [MIT license](https://opensource.org/license/mit) (full text in `rpi_rp2350b.LICENSE.txt` next to it):
 * rpi_rp2350b.step
+
+### Exception for the silkscreen font
+
+The back silkscreen text is drawn with the Barlow Condensed font (Copyright 2017 The Barlow Project Authors), used under the [SIL Open Font License 1.1](https://openfontlicense.org) (full text in `OFL.txt` next to the font files in `pcb/leyden_jar_controller/art/fonts`):
+* BarlowCondensed-SemiBold.ttf
+* BarlowCondensed-Bold.ttf
 
 ## Use at your own risks
 
