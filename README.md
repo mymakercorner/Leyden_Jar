@@ -62,11 +62,14 @@ One 3D model file, taken from SnapEDA website, that is using the [Creative Commo
 One 3D model file, extracted from Raspberry Pi's RP2350B minimal KiCad design (Copyright (c) 2026 Raspberry Pi Ltd), that is using the [MIT license](https://opensource.org/license/mit) (full text in `rpi_rp2350b.LICENSE.txt` next to it):
 * rpi_rp2350b.step
 
-### Exception for the silkscreen font
+### Exception for the PCB art fonts
 
-The back silkscreen text is drawn with the Barlow Condensed font (Copyright 2017 The Barlow Project Authors), used under the [SIL Open Font License 1.1](https://openfontlicense.org) (full text in `OFL.txt` next to the font files in `pcb/leyden_jar_controller/art/fonts`):
+The silkscreen text is drawn with the Barlow Condensed font (Copyright 2017 The Barlow Project Authors), used under the [SIL Open Font License 1.1](https://openfontlicense.org) (full text in `OFL.txt` next to the font files in `pcb/leyden_jar_controller/art/fonts`):
 * BarlowCondensed-SemiBold.ttf
 * BarlowCondensed-Bold.ttf
+
+The copper quote is drawn with the Caveat font (Copyright 2014 The Caveat Project Authors), also used under the SIL Open Font License 1.1 (full text in `OFL_Caveat.txt` in the same folder):
+* Caveat[wght].ttf
 
 ## Use at your own risks
 

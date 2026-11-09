@@ -2,7 +2,7 @@
 
 Usage:  python -E -P backsilk.py [board.kicad_pcb]
   (fontTools and shapely come from the user site-packages, so not -I)
-Needs: fontTools, shapely; fonts in art/fonts (Barlow Condensed, SIL OFL 1.1, see fonts/OFL.txt).
+Needs: fontTools, shapely; fonts in art/fonts, all SIL OFL 1.1: Barlow Condensed (OFL.txt), Caveat (OFL_Caveat.txt).
 
 Reads the board geometry (read-only) and builds the whole B.SilkS art as exact outlines:
 text as Barlow glyph outlines (with GPOS kerning), strokes buffered to their width, white tabs with the text
@@ -18,6 +18,7 @@ Outputs (next to this script):
   frontsilk_preview.svg  front view around J3 with the Leyden jar mark
   frontsilk_board.svg    the front mark for F.SilkS (board coordinates, origin = board origin, import at 0/0)
   frontsilk_board.json   the same polygons, for verification
+  frontcopper_board.svg  Musschenbroek's quote for F.Cu (no net), same import settings; .json to verify
 Preview PNG (headless Edge):
   msedge --headless=new --disable-gpu --hide-scrollbars --window-size=1914,612 --screenshot=out.png file:///<abs path>/backsilk_preview.svg
 """
@@ -122,6 +123,23 @@ class Font:
             x += self.hmtx[g][0]
             prev = g
         return out, x
+
+def var_font(path, wght):
+    """A Font made from one instance of a variable font."""
+    from fontTools.varLib.instancer import instantiateVariableFont
+    f = Font.__new__(Font)
+    t = instantiateVariableFont(TTFont(path), {"wght": wght})
+    f.f, f.gs, f.cmap = t, t.getGlyphSet(), t.getBestCmap()
+    f.cap, f.hmtx, f.cache, f.subtables = t["OS/2"].sCapHeight, t["hmtx"], {}, []
+    return f
+
+SCRIPT = var_font(os.path.join(HERE, "fonts", "Caveat[wght].ttf"), 700)   # handwriting (SIL OFL), copper quote
+
+def script_run(s, h):
+    """Handwritten line (connected glyphs: no added letter spacing), origin at the baseline start, y up."""
+    k = h / SCRIPT.cap
+    glyphs, adv = SCRIPT.layout(s)
+    return unary_union([affinity.affine_transform(SCRIPT.glyph(g), [k, 0, 0, k, gx * k, 0]) for g, gx in glyphs]), adv * k
 
 FONTS = {600: Font(os.path.join(HERE, "fonts", "BarlowCondensed-SemiBold.ttf")),
          700: Font(os.path.join(HERE, "fonts", "BarlowCondensed-Bold.ttf"))}
@@ -591,6 +609,35 @@ for i, l in enumerate(FN_LINES):                 # lines centred on the jar, lef
          weight=700, label="front name")
 front += [silk.pop(_fs) for _ in FN_LINES]       # text() appends to the back list: move them to the front
 FRONT = unary_union([g for g, _ in front]).simplify(0.002)
+
+# ---------------------------------------------------------------- front copper: Musschenbroek's quote (F.Cu, no net)
+# His letter to Reaumur (20 Jan 1746) after the first Leyden jar shock. Rev 3 had it on B.Cu. Here: F.Cu along the
+# right board edge in Caveat (handwriting, Rico's wish), three vertical lines reading bottom to top, in the strip between H2's pad (x 76.5), the edge
+# (x 84.5) and two vias at y 22.75. Kept >= 0.4 mm from other copper and >= 0.5 mm from the edge (rules: 0.2 / 0.2).
+QUOTE = ["“I would not take a second shock", "for the Kingdom of France.”",
+         "— Pieter van Musschenbroek, 1746"]
+Q_H, Q_PITCH = 1.05, 1.47                       # Caveat Bold, cap height 1.05 mm (x-height 0.69 mm)
+Q_STRIP = (76.9, 0.8, 84.0, 22.35)
+qcx, qcy = (Q_STRIP[0] + Q_STRIP[2]) / 2, (Q_STRIP[1] + Q_STRIP[3]) / 2
+qruns = [script_run(l, Q_H) for l in QUOTE]
+q_len = max(w for _, w in qruns)
+parts = []
+for i, (g_, w_) in enumerate(qruns):            # local frame (y down): quote left-aligned, signature right-aligned
+    x_ = -q_len / 2 if i < len(QUOTE) - 1 else q_len / 2 - w_
+    y_ = (i - (len(QUOTE) - 1) / 2) * Q_PITCH + Q_H / 2
+    parts.append(affinity.affine_transform(g_, [1, 0, 0, -1, x_, y_]))
+# rotate so the text reads bottom to top, letter tops toward the board inside: x = cx + v, y = cy - u
+COPPER = unary_union([affinity.affine_transform(g_, [0, 1, -1, 0, qcx, qcy]) for g_ in parts]).simplify(0.002)
+fcu = [pad_geom(p) for p in fpads]
+for m in re.finditer(r"\n\t\(segment", src):
+    b_ = block(src, m.start() + 2)
+    if '(layer "F.Cu")' in b_:
+        a_ = nums(re.search(r"\(start ([^)]+)\)", b_).group(1))
+        e_ = nums(re.search(r"\(end ([^)]+)\)", b_).group(1))
+        fcu.append(LineString([a_, e_]).buffer(float(re.search(r"\(width ([\d.]+)\)", b_).group(1)) / 2))
+fcu += [Point(XM - vx, vy).buffer(vr) for vx, vy, vr in vias]
+q_cu = min(COPPER.distance(g) for g in fcu)
+q_edge = min(COPPER.distance(LineString([(XM - x, y) for x, y in e])) for e in edges)
 fcopper = [(pad_geom(p), p) for p in fpads]
 fproblems = {}
 for g, lab in front:
@@ -658,7 +705,7 @@ with open(os.path.join(HERE, "frontsilk_board.svg"), "w", encoding="utf-8") as f
 json.dump({"bounds": list(FRONT.bounds),
            "polygons": [[[round(x, 4), round(y, 4)] for x, y in q.exterior.coords[:-1]] for q in fpolys]},
           open(os.path.join(HERE, "frontsilk_board.json"), "w"), separators=(",", ":"))
-fx0, fy0, fx1, fy1 = 8.0, -0.6, 42.0, 17.0      # front preview: J3 and its surroundings
+fx0, fy0, fx1, fy1 = -1.0, -0.6, 86.0, 27.2     # front preview: whole board
 fo = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{fx0} {fy0} {fx1 - fx0} {fy1 - fy0}" '
       f'width="{(fx1 - fx0) * 40:.0f}" height="{(fy1 - fy0) * 40:.0f}">',
       f'<rect x="{fx0}" y="{fy0}" width="{fx1 - fx0}" height="{fy1 - fy0}" fill="#e9e7e1"/>',
@@ -671,10 +718,23 @@ for pg, p in fcopper:
     fo.append(f'<path d="{svg_path(pg, "{:.3f}")}" fill="{HOLE if p["kind"] == "np_thru_hole" else CU}"/>')
     if p["drill"] and p["kind"] != "np_thru_hole":
         fo.append(f'<circle cx="{p["x"]:.3f}" cy="{p["y"]:.3f}" r="{p["drill"] / 2:.3f}" fill="{HOLE}"/>')
+fo.append(f'<path d="{svg_path(COPPER)}" fill="#3f6b52" fill-rule="evenodd"/>')   # copper under mask
 fo.append(f'<path d="{svg_path(FRONT)}" fill="{SILK}" fill-rule="evenodd"/></svg>')
 open(os.path.join(HERE, "frontsilk_preview.svg"), "w", encoding="utf-8").write("\n".join(fo))
 print(f"front art: {len(fpolys)} polygons, bounds x {FRONT.bounds[0]:.3f}..{FRONT.bounds[2]:.3f} "
       f"y {FRONT.bounds[1]:.3f}..{FRONT.bounds[3]:.3f}, {edge_d:.2f} mm from the board edge")
+cpolys = [q for p in getattr(COPPER, "geoms", [COPPER]) for q in fracture(p)]
+with open(os.path.join(HERE, "frontcopper_board.svg"), "w", encoding="utf-8") as f:
+    f.write(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}mm" height="{H}mm" viewBox="0 0 {W} {H}">\n')
+    for q in cpolys:
+        f.write(f'<path d="{svg_path(q)}" fill="#000000"/>\n')
+    f.write("</svg>\n")
+json.dump({"bounds": list(COPPER.bounds),
+           "polygons": [[[round(x, 4), round(y, 4)] for x, y in q.exterior.coords[:-1]] for q in cpolys]},
+          open(os.path.join(HERE, "frontcopper_board.json"), "w"), separators=(",", ":"))
+print(f"front copper quote: {len(cpolys)} polygons, bounds x {COPPER.bounds[0]:.3f}..{COPPER.bounds[2]:.3f} "
+      f"y {COPPER.bounds[1]:.3f}..{COPPER.bounds[3]:.3f}, longest line {q_len:.2f} mm, "
+      f"{q_cu:.2f} mm from other copper, {q_edge:.2f} mm from the edge")
 print("FRONT CLEARANCE PROBLEMS:", len(fproblems))
 for (lab, ref, num), v in fproblems.items():
     print(f"   {lab!r} {v:+.3f} mm from {ref} pad {num}")
