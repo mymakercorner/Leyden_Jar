@@ -15,6 +15,9 @@ Outputs (next to this script):
                          board origin: KiCad File > Import > Graphics onto B.SilkS at (0, 0), scale 1
                          (Konnect's import_svg_logo kept only one polygon over IPC on 2026-11-09)
   backsilk_board.json    the same polygons, to verify the import against the board file
+  frontsilk_preview.svg  front view around J3 with the Leyden jar mark
+  frontsilk_board.svg    the front mark for F.SilkS (board coordinates, origin = board origin, import at 0/0)
+  frontsilk_board.json   the same polygons, for verification
 Preview PNG (headless Edge):
   msedge --headless=new --disable-gpu --hide-scrollbars --window-size=1914,612 --screenshot=out.png file:///<abs path>/backsilk_preview.svg
 """
@@ -174,6 +177,7 @@ def nums(t):
     return [float(v) for v in t.split()]
 
 pads = []      # dict(kind, shape, x, y, w, h, ang, drill, ref, num)  view coords
+fpads = []     # same for the front, board coordinates
 for m in re.finditer(r"\n\t\(footprint \"", src):
     fb = block(src, m.start() + 2)
     ref = re.search(r'\(property "Reference" "([^"]+)"', fb).group(1)
@@ -191,8 +195,11 @@ for m in re.finditer(r"\n\t\(footprint \"", src):
         dr = re.search(r"\(drill (?:oval )?([\d.]+)", pb)
         bx = X + px * math.cos(t) + py * math.sin(t)
         by = Y - px * math.sin(t) + py * math.cos(t)
-        back = kind in ("thru_hole", "np_thru_hole") or "B.Cu" in layers
-        if not back:
+        through = kind in ("thru_hole", "np_thru_hole")
+        if through or "F.Cu" in layers:            # front copper, BOARD coordinates (front silk art)
+            fpads.append(dict(kind=kind, shape=shape, x=bx, y=by, w=w, h=h, ang=-pang,
+                              drill=float(dr.group(1)) if dr else 0.0, ref=ref, num=num))
+        if not (through or "B.Cu" in layers):
             continue
         pads.append(dict(kind=kind, shape=shape, x=VX(bx), y=by, w=w, h=h, ang=-pang,
                          drill=float(dr.group(1)) if dr else 0.0, ref=ref, num=num))
@@ -464,16 +471,54 @@ def logo(cx, cy, size):
     g = affinity.affine_transform(g, [k, 0, 0, k, cx - (x0 + x1) / 2 * k, cy - (y0 + y1) / 2 * k])
     silk.append((g, "logo"))
 
+# Leyden jar mark (concept C): the jar, the first capacitor (Leiden, 1745), with its rod drawn as a buckling
+# spring topped by a keycap. Drawn in "units" (170 = full height) then scaled; every line and gap >= 0.15 mm
+# at JAR_H (the spring's zig-zag strokes are 0.33 mm apart at 7.6 mm).
+JAR_H = 7.6
+JAR_SW = 0.17                                    # line width (mm)
+
+def jar_geom(cx, cy, H=JAR_H, sw=JAR_SW):
+    """Union of the jar mark, centred on (cx, cy), H mm tall (view coordinates, y down)."""
+    u = H / 170.0
+    P = lambda x, y: (cx + x * u, cy + (y - 85) * u)
+    parts = []
+    # keycap: trapezoid, wider at the bottom, slightly rounded
+    cap = Polygon([P(-13, 0), P(13, 0), P(18, 20), P(-18, 20)])
+    parts.append(cap.buffer(-0.08).buffer(0.08))
+    # buckling spring: zig-zag from the keycap down to the stopper
+    zz = [P(0, 20), P(-8, 25), P(8, 32.5), P(-8, 40), P(8, 47.5), P(-8, 54), P(0, 56)]
+    parts.append(LineString(zz).buffer(sw / 2, quad_segs=6))
+    # stopper (cork) in the jar mouth
+    parts.append(rbox(*P(-20, 56), *P(20, 70), 0.12))
+    # glass: outline of the jar body
+    gx0, gy0 = P(-34, 70)
+    gx1, gy1 = P(34, 170)
+    r = 10 * u
+    glass = rbox(gx0, gy0, gx1, gy1, r)
+    parts.append(glass.difference(glass.buffer(-sw)))
+    # outer foil: solid band on the lower part of the jar
+    parts.append(glass.intersection(box(gx0, P(0, 112)[1], gx1, gy1)))
+    # chain from the stopper to the inner foil: a row of dots
+    ya, yb = P(0, 70)[1], P(0, 112)[1]
+    n = max(2, int((yb - ya) / (2 * sw + 0.16)))
+    for i in range(n + 1):
+        parts.append(Point(cx, ya + (yb - ya) * i / n).buffer(sw * 0.62, quad_segs=6))
+    return unary_union(parts)
+
+JAR_W = jar_geom(0, 0).bounds[2] - jar_geom(0, 0).bounds[0]
+
 # Two blocks on one band between the J4 card and the J9 tab, sharing one vertical centre and spaced with
-# equal gaps (left margin = middle gap = right margin).
+# equal gaps (left margin = middle gap = right margin). Left block: jar mark + name; right block: credit + RC logo.
 TITLE, SUB, VER = "The Leyden Jar", "Beam Spring and Model F controller", "V2 · REV 1 · 2026"
 CREDIT, LOGO = ["Designed with love", "by"], 8.0
 TITLE_W = max(tw(TITLE, 2.3, 700), tw(SUB, 0.95))
 CREDIT_W = max(tw(c, 1.0) for c in CREDIT)
 BAND_L, BAND_R = KX1, J9_TAB_X0                 # J4 card right edge, J9 tab left edge
-GAP = (BAND_R - BAND_L - TITLE_W - (CREDIT_W + 0.8 + LOGO)) / 3
+JAR_GAP = 1.1                                   # jar mark to the name
+GAP = (BAND_R - BAND_L - (JAR_W + JAR_GAP + TITLE_W) - (CREDIT_W + 0.8 + LOGO)) / 3
 MID = 17.0                                      # common vertical centre
-TX = BAND_L + GAP
+TX = BAND_L + GAP + JAR_W + JAR_GAP
+silk.append((jar_geom(BAND_L + GAP + JAR_W / 2, MID), "jar mark"))
 VOFF = 4.41                                     # subtitle descenders >= 0.15 mm above the version tab
 ROW = MID - (1.15 + VOFF + TAB_H / 2) / 2 + 1.15     # title cap top .. version tab bottom centred on MID
 text(TX, ROW, TITLE, h=2.3, anchor="start", weight=700, label="title")
@@ -526,6 +571,35 @@ def spots(g, label):
         c = p.centroid
         print(f"   area {p.area * 1e3:6.2f} um^2*1e3 at view ({c.x:.2f}, {c.y:.2f})")
 
+# ---------------------------------------------------------------- front: Leyden jar mark (F.SilkS, BOARD coordinates)
+# Right of the SWD/I2C header J3 (Rico, 2026-11-09). J3 is almost never fitted, so its body zone counts as free:
+# about 11 x 8.6 mm between J3's pins (x 15.5), U1 (x 27.0), D2 / J7 (y 4.3) and R36 / U1 (y 12.9).
+# Same composition as the back: the 7.6 mm jar with the name beside it, one word per line, in the back title's
+# font (Barlow Condensed Bold, mixed case).
+FREE_F = (15.5, 4.3, 27.0, 12.9)
+FRONT_H, FN_H, FN_GAP, FN_PITCH = JAR_H, 1.75, 0.9, 2.55
+FN_LINES = ["The", "Leyden", "Jar"]
+fjw = jar_geom(0, 0, FRONT_H).bounds
+fjw = fjw[2] - fjw[0]
+fblock = fjw + FN_GAP + max(tw(l, FN_H, 700) for l in FN_LINES)
+FX0 = (FREE_F[0] + FREE_F[2]) / 2 - fblock / 2
+FY_C = 5.06 + 2.54                               # centred on J3's middle pin row (Rico)
+front = [(jar_geom(FX0 + fjw / 2, FY_C, FRONT_H), "front jar")]
+_fs = len(silk)
+for i, l in enumerate(FN_LINES):                 # lines centred on the jar, left-aligned beside it
+    text(FX0 + fjw + FN_GAP, FY_C + (i - (len(FN_LINES) - 1) / 2) * FN_PITCH, l, h=FN_H, anchor="start",
+         weight=700, label="front name")
+front += [silk.pop(_fs) for _ in FN_LINES]       # text() appends to the back list: move them to the front
+FRONT = unary_union([g for g, _ in front]).simplify(0.002)
+fcopper = [(pad_geom(p), p) for p in fpads]
+fproblems = {}
+for g, lab in front:
+    for pg, p in fcopper:
+        d = g.distance(pg)
+        if d < CLEAR:
+            fproblems[(lab, p["ref"], p["num"])] = min(d, fproblems.get((lab, p["ref"], p["num"]), 9))
+edge_d = min(FRONT.distance(LineString([(XM - x, y) for x, y in e])) for e in edges)
+
 # ---------------------------------------------------------------- outputs
 def svg_path(g, fmt="{:.4f}"):
     out = []
@@ -574,6 +648,36 @@ json.dump({"bounds": [bx0, by0, bx1, by1],
            "polygons": [[[round(x, 4), round(y, 4)] for x, y in q.exterior.coords[:-1]] for q in polys]},
           open(os.path.join(HERE, "backsilk_board.json"), "w"), separators=(",", ":"))
 
+# front art: board coordinates already, hole-free polygons, canvas origin = board origin
+fpolys = [q for p in getattr(FRONT, "geoms", [FRONT]) for q in fracture(p)]
+with open(os.path.join(HERE, "frontsilk_board.svg"), "w", encoding="utf-8") as f:
+    f.write(f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}mm" height="{H}mm" viewBox="0 0 {W} {H}">\n')
+    for q in fpolys:
+        f.write(f'<path d="{svg_path(q)}" fill="#000000"/>\n')
+    f.write("</svg>\n")
+json.dump({"bounds": list(FRONT.bounds),
+           "polygons": [[[round(x, 4), round(y, 4)] for x, y in q.exterior.coords[:-1]] for q in fpolys]},
+          open(os.path.join(HERE, "frontsilk_board.json"), "w"), separators=(",", ":"))
+fx0, fy0, fx1, fy1 = 8.0, -0.6, 42.0, 17.0      # front preview: J3 and its surroundings
+fo = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{fx0} {fy0} {fx1 - fx0} {fy1 - fy0}" '
+      f'width="{(fx1 - fx0) * 40:.0f}" height="{(fy1 - fy0) * 40:.0f}">',
+      f'<rect x="{fx0}" y="{fy0}" width="{fx1 - fx0}" height="{fy1 - fy0}" fill="#e9e7e1"/>',
+      f'<rect x="-0.5" y="0" width="85" height="26.5" fill="{MASK}"/>']
+for e in edges:
+    fo.append('<polyline points="' + " ".join(f"{XM - x:.3f},{y:.3f}" for x, y in e) + '" fill="none" stroke="#8a8a80" stroke-width="0.12"/>')
+for vx, vy, vr in vias:
+    fo.append(f'<circle cx="{XM - vx:.3f}" cy="{vy:.3f}" r="{vr:.3f}" fill="{VIA}"/>')
+for pg, p in fcopper:
+    fo.append(f'<path d="{svg_path(pg, "{:.3f}")}" fill="{HOLE if p["kind"] == "np_thru_hole" else CU}"/>')
+    if p["drill"] and p["kind"] != "np_thru_hole":
+        fo.append(f'<circle cx="{p["x"]:.3f}" cy="{p["y"]:.3f}" r="{p["drill"] / 2:.3f}" fill="{HOLE}"/>')
+fo.append(f'<path d="{svg_path(FRONT)}" fill="{SILK}" fill-rule="evenodd"/></svg>')
+open(os.path.join(HERE, "frontsilk_preview.svg"), "w", encoding="utf-8").write("\n".join(fo))
+print(f"front art: {len(fpolys)} polygons, bounds x {FRONT.bounds[0]:.3f}..{FRONT.bounds[2]:.3f} "
+      f"y {FRONT.bounds[1]:.3f}..{FRONT.bounds[3]:.3f}, {edge_d:.2f} mm from the board edge")
+print("FRONT CLEARANCE PROBLEMS:", len(fproblems))
+for (lab, ref, num), v in fproblems.items():
+    print(f"   {lab!r} {v:+.3f} mm from {ref} pad {num}")
 print(f"{len(pads)} exposed pads, {len(vias)} vias, {len(silk)} silk items, {len(knock)} knock-outs")
 print(f"board art: {len(polys)} polygons, {sum(len(q.exterior.coords) for q in polys)} points, "
       f"art bounds x {bx0:.4f}..{bx1:.4f} y {by0:.4f}..{by1:.4f}; SVG canvas origin = board origin")
