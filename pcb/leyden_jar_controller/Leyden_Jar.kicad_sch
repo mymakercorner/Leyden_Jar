@@ -14898,7 +14898,7 @@
 	)
 	(wire
 		(pts
-			(xy 398.78 278.13) (xy 398.78 275.59)
+			(xy 391.16 278.13) (xy 391.16 275.59)
 		)
 		(stroke
 			(width 0)
@@ -16488,7 +16488,7 @@
 	)
 	(wire
 		(pts
-			(xy 411.48 278.13) (xy 411.48 275.59)
+			(xy 407.67 278.13) (xy 407.67 275.59)
 		)
 		(stroke
 			(width 0)
@@ -20217,7 +20217,7 @@
 		(uuid "0577703f-59bd-4af3-bcf6-27e062a4e03f")
 	)
 	(label "UART_DATA2"
-		(at 411.48 275.59 0)
+		(at 407.67 275.59 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -20507,7 +20507,7 @@
 		(uuid "2e2aede8-e120-429b-91e2-f7e8270f53dc")
 	)
 	(label "UART_DATA"
-		(at 398.78 275.59 0)
+		(at 391.16 275.59 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -25444,7 +25444,7 @@
 	)
 	(symbol
 		(lib_id "Device:D_TVS")
-		(at 398.78 281.94 90)
+		(at 391.16 281.94 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -25454,7 +25454,7 @@
 		(dnp no)
 		(uuid "32d579cf-3369-4d43-b764-960fd56ba759")
 		(property "Reference" "D1"
-			(at 396.24 281.94 0)
+			(at 388.62 281.94 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -25464,7 +25464,7 @@
 			)
 		)
 		(property "Value" "ESD9B3.3ST5G"
-			(at 401.32 281.94 0)
+			(at 393.7 281.94 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -25474,7 +25474,7 @@
 			)
 		)
 		(property "Footprint" "Leyden_Jar:D_SOD-923"
-			(at 398.78 281.94 0)
+			(at 391.16 281.94 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25485,7 +25485,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.onsemi.com/download/data-sheet/pdf/esd9b-d.pdf"
-			(at 398.78 281.94 0)
+			(at 391.16 281.94 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25496,7 +25496,7 @@
 			)
 		)
 		(property "Description" "Bidirectional transient-voltage-suppression diode"
-			(at 398.78 281.94 0)
+			(at 391.16 281.94 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -25507,7 +25507,7 @@
 			)
 		)
 		(property "LCSC" "C96512"
-			(at 398.78 281.94 0)
+			(at 391.16 281.94 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28251,7 +28251,7 @@
 	)
 	(symbol
 		(lib_id "Device:D_TVS")
-		(at 411.48 281.94 90)
+		(at 407.67 281.94 90)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -28261,7 +28261,7 @@
 		(dnp no)
 		(uuid "5eec5746-3e34-406d-92bd-cb24543d8fe3")
 		(property "Reference" "D2"
-			(at 408.94 281.94 0)
+			(at 405.13 281.94 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -28271,7 +28271,7 @@
 			)
 		)
 		(property "Value" "ESD9B3.3ST5G"
-			(at 414.02 281.94 0)
+			(at 410.21 281.94 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -28281,7 +28281,7 @@
 			)
 		)
 		(property "Footprint" "Leyden_Jar:D_SOD-923"
-			(at 411.48 281.94 0)
+			(at 407.67 281.94 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28292,7 +28292,7 @@
 			)
 		)
 		(property "Datasheet" "https://www.onsemi.com/download/data-sheet/pdf/esd9b-d.pdf"
-			(at 411.48 281.94 0)
+			(at 407.67 281.94 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28303,7 +28303,7 @@
 			)
 		)
 		(property "Description" "Bidirectional transient-voltage-suppression diode"
-			(at 411.48 281.94 0)
+			(at 407.67 281.94 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28314,7 +28314,7 @@
 			)
 		)
 		(property "LCSC" "C96512"
-			(at 411.48 281.94 0)
+			(at 407.67 281.94 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28341,7 +28341,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 411.48 285.75 0)
+		(at 407.67 285.75 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -28351,7 +28351,7 @@
 		(dnp no)
 		(uuid "604929b9-dc68-467d-bc44-0db836bde737")
 		(property "Reference" "#PWR047"
-			(at 411.48 292.1 0)
+			(at 407.67 292.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28362,7 +28362,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 411.48 289.56 0)
+			(at 407.67 289.56 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -28372,7 +28372,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 411.48 285.75 0)
+			(at 407.67 285.75 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28383,7 +28383,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 411.48 285.75 0)
+			(at 407.67 285.75 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -28394,7 +28394,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 411.48 285.75 0)
+			(at 407.67 285.75 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31683,7 +31683,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 398.78 285.75 0)
+		(at 391.16 285.75 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -31693,7 +31693,7 @@
 		(dnp no)
 		(uuid "92cda06e-8f60-449c-b798-4e93ebcb42ef")
 		(property "Reference" "#PWR05"
-			(at 398.78 292.1 0)
+			(at 391.16 292.1 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31704,7 +31704,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 398.78 289.56 0)
+			(at 391.16 289.56 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -31714,7 +31714,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 398.78 285.75 0)
+			(at 391.16 285.75 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31725,7 +31725,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 398.78 285.75 0)
+			(at 391.16 285.75 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -31736,7 +31736,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 398.78 285.75 0)
+			(at 391.16 285.75 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
