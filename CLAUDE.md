@@ -223,6 +223,11 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
   down to clear U1. North cap row now at y 7.9 (top courtyard 6.99); south caps at y 21.05 (bottom 21.96), leaving
   about 1.2 mm of courtyard gap to J2 (pads at y 24.05) for the COL0-10 fan-out. The 1V1 LDO block (U7, C24, C25),
   D1, JP1 (removed 2026-11-01) and R40 stayed in the top band.
+- **Vias: all 0.6 mm pad / 0.3 mm hole, tented both sides** (changed 2026-11-12 from 118 vias at 0.6/0.2: JLCPCB
+  charges extra for 0.2 mm holes, which matters for the end user's volume builds). Board rules follow JLCPCB's
+  published limits with margin: copper-to-hole 0.28 (JLCPCB: via hole 0.20, PTH 0.28), hole-to-hole 0.4 (JLCPCB via
+  0.20), minimum drill 0.3 so DRC flags any new 0.2 mm via; net classes Default/Signal via drill 0.3. Order with the
+  default "0.3mm/(0.4/0.45mm)" via option. Don't use "Set to net class values" on vias: USB/Fine classes are 0.8/0.4.
 - U5 decoupling stays top-side only (no double-sided JLCPCB assembly, as Rev 3). South-side caps C6/C4/C7 (pins
   5/10/15) sit in line about 1 mm below their pins (Rev 3 pattern). To make room, ROW4-7 (pins 1-4) and SDA/SCL
   (pins 16/17) escape inward through tented vias under U5's body (ring between the pad row and the exposed pad),
