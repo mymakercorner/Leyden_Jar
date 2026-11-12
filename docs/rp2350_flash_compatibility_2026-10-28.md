@@ -136,6 +136,37 @@ on 12 Nov 2026.
 - **Fallbacks:** Boya BY25Q64ESSIG(R) is the in-stock low-cost drop-in, Winbond W25Q64JVSSIM the proven one.
 - The 150 mil P25Q64SH-SSH-IT/-IR in the 8 MB table above do **not** fit U1's 208 mil pads.
 
+## Prototype tests
+
+Added 12 Nov 2026. The first V2 prototypes get one board per 208 mil part (Winbond, Puya, Boya). Each board is tested
+on its own, not plugged into the keyboard PCB, to check that it runs and reboots as it should. Upstream QMK doesn't
+support the RP2350 yet, so a small pico-sdk test program, built with the default boot code (`boot2_w25q080`), is the
+quickest way to run these tests.
+
+Before U1 is fitted:
+
+1. Measure the rails: +5V, 3V3 and +1V1. +1V1 comes from the external LDO and must be within the DVDD range,
+   1.05-1.16 V.
+2. Plug in USB. With no flash, the RP2350 has nothing to boot and should come up as the BOOTSEL USB drive. That
+   proves the MCU, crystal, core supply and USB path before the flash is involved.
+
+After U1 is fitted:
+
+1. Read the JEDEC ID with `9Fh` (pico-sdk `flash_do_cmd`) to confirm the board talks to the chip and which chip it
+   has. Expected: Winbond `EF 40 17`, Puya `85 60 17` (datasheet V1.5, ID table), Boya `68 40 17` (Rev 2.9, p. 20, Table 8).
+2. Read status register 2 with `35h` after boot and check that QE (bit 1) is set: the boot code enabled quad mode,
+   not just plain serial mode. The default boot code expects SR2 to read exactly `02h`; any other value makes it
+   rewrite the status registers on every boot.
+3. Check every reset path:
+   - RUN button while the board stays powered: the continuous-read reset check above, the one that matters most
+     for the non-Winbond chips.
+   - Full power cycle.
+   - Watchdog reset from firmware.
+   - `picotool reboot -u` into BOOTSEL, then back to the application.
+   - BOOT button held during reset.
+4. Erase and program a sector from firmware, then read it back. Vial/QMK keep their EEPROM data in flash, so the
+   write path must work, not only reads.
+
 ## 4 MB parts you can buy
 
 At 4 MB the cheapest part that works with the default boot code is the Boya BY25Q32ESTIG at $0.42 in SOP-8 150 mil.
