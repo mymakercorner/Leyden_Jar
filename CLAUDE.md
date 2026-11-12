@@ -123,8 +123,10 @@ Planned hardware changes from Rev 3:
   Changed on 2026-10-31 from the XSON-8 4x4 W25Q64JVXGIM (C6604688, $7.16) once the layout had room for the bigger
   package. Winbond W25Q is the family pico-sdk's default RP2350 boot2 targets. "IM" = QE bit 0 from the factory, set
   by boot2. Cheaper SOP-8 alternatives and their boot2 compatibility: `docs/rp2350_flash_compatibility_2026-10-28.md`.
-- Crystal: **ABM8-272-T3** (JLCPCB C20625731), the part the RP2350 datasheet recommends (12 MHz, CL 10 pF,
-  ESR ≤ 50 Ω). Use the Pico 2 loading: 15 pF caps and a 1k series resistor on XOUT.
+- Crystal: **YXC X322512MSB4SI** (JLCPCB C9002, basic; 12 MHz, CL 20 pF, 80 Ω), Rev 3's crystal, with **33 pF**
+  load caps C14/C15 (C1562, basic) and the 1k series resistor R5 on XOUT (Rev 3 ran it with 30 pF and the same 1k).
+  Changed on 2026-11-12 from the ABM8-272-T3 the RP2350 datasheet recommends (C20625731, CL 10 pF, 15 pF caps): JLCPCB
+  had 1 in stock and no pre-order.
 - The matrix sense chain (LMV339s, DAC, ROW0-7 on GP0-7, COL0-15) stays untouched, except for two filter caps added
   on 2026-11-02 (new compared with Rev 3): **C18** 4.7 nF on V_REF (C1538, basic; 3.2 kΩ source, τ 15 µs) and
   **C30** 22 nF on ROW_PULLUP (C1532, basic; 880 Ω source, τ 19 µs). V_REF and the 0.39 V row bias both scale with
@@ -258,7 +260,7 @@ Points to verify while implementing (against the RP2350 datasheet / hardware des
 - 3V3 budget: about 40 mA for the core design (RP2350 IO/USB, flash, comparators, DAC, LEDs; the core is on +5V
   now), plus the TFT and whatever hangs on J3's I2C. 300 mA leaves margin unless the backlight runs from 3V3.
 - **Erratum RP2350-E9** on input pads: the ROW inputs have 10k external pull-ups to 3V3, which should be safe.
-  Check the silicon stepping JLCPCB stocks.
+  JLCPCB's RP2350B (C42415655) is stepping A4 (checked 2026-11-12), so E9 (A2 only) doesn't apply.
 
 V2 schematic status (2026-10-26): drawn in place on the flat A2 sheet, ERC clean (errors). New blocks have titles
 but no dashed frames yet. Project-local symbols added: `AP22653W6`, `TLV743xxPDBV`, `MCP4716xxx-xCH`. The title

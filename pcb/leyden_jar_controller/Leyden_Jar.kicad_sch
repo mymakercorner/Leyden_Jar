@@ -30490,7 +30490,7 @@
 				)
 			)
 		)
-		(property "Value" "ABM8-272-T3"
+		(property "Value" "X322512MSB4SI"
 			(at 237.49 87.63 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -30511,7 +30511,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C9002.pdf"
 			(at 237.49 92.71 0)
 			(hide yes)
 			(show_name no)
@@ -30532,7 +30532,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C20625731"
+		(property "LCSC" "C9002"
 			(at 237.49 92.71 90)
 			(hide yes)
 			(show_name no)
@@ -33084,7 +33084,7 @@
 				)
 			)
 		)
-		(property "Value" "15p"
+		(property "Value" "33p"
 			(at 223.5263 96.52 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -33126,7 +33126,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C1548"
+		(property "LCSC" "C1562"
 			(at 223.52 99.06 90)
 			(hide yes)
 			(show_name no)
@@ -38600,7 +38600,7 @@
 				)
 			)
 		)
-		(property "Value" "15p"
+		(property "Value" "33p"
 			(at 223.5263 86.36 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -38642,7 +38642,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C1548"
+		(property "LCSC" "C1562"
 			(at 223.52 88.9 90)
 			(hide yes)
 			(show_name no)

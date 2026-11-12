@@ -1556,6 +1556,15 @@
 		(path "/b8576358-9b5f-4cc9-be61-52fe28bd110f")
 		(sheetname "/")
 		(sheetfile "Leyden_Jar.kicad_sch")
+		(units
+			(unit
+				(name "A")
+				(pins "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15"
+					"16" "17" "18" "19" "20" "21" "22" "23" "24" "25" "26" "27" "28" "29"
+					"30" "31" "32" "33"
+				)
+			)
+		)
 		(attr through_hole exclude_from_pos_files exclude_from_bom)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
@@ -2462,7 +2471,7 @@
 				)
 			)
 		)
-		(property "Value" "15p"
+		(property "Value" "33p"
 			(at 0 0.507375 0)
 			(layer "F.Fab")
 			(uuid "d8cd75c1-f1e8-4fb9-b6e8-c3420e783ea2")
@@ -2495,7 +2504,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C1548"
+		(property "LCSC" "C1562"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -5434,7 +5443,7 @@
 				)
 			)
 		)
-		(property "Value" "15p"
+		(property "Value" "33p"
 			(at 0 0.5257 0)
 			(layer "F.Fab")
 			(uuid "49ee8c5e-b228-433a-ada9-20e38d61cd4b")
@@ -5467,7 +5476,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C1548"
+		(property "LCSC" "C1562"
 			(at 0 0 180)
 			(unlocked yes)
 			(layer "F.Fab")
@@ -16232,7 +16241,7 @@
 				)
 			)
 		)
-		(property "Value" "ABM8-272-T3"
+		(property "Value" "X322512MSB4SI"
 			(at 0 -1 180)
 			(layer "F.Fab")
 			(uuid "e6ff74fb-7895-4055-8f07-ecd44566f2b2")
@@ -16244,7 +16253,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C9002.pdf"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
@@ -16266,7 +16275,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C20625731"
+		(property "LCSC" "C9002"
 			(at 0 0 0)
 			(unlocked yes)
 			(layer "F.Fab")
