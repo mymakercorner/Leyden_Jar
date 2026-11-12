@@ -99,10 +99,10 @@ compatible 8 MB part in a 4x4 mm package costs $2.23 or more. Prices are for 1 p
 | [P25Q64SH-SSH-IR](https://jlcpcb.com/partdetail/C18185312) (Puya) | SOP-8 150 mil | yes | JLCPCB C18185312 | 0.78 | 5,331 |
 | [BY25Q64ESSIG(R)](https://jlcpcb.com/partdetail/C22471254) (Boya) | SOP-8 208 mil | yes | JLCPCB C22471254 | 0.87 | 3,450 |
 | [FM25Q64AI3-SOB-T-G](https://jlcpcb.com/partdetail/C19626526) (Fudan) | SOP-8 208 mil | yes | JLCPCB C19626526 | 1.04 | 11,766 |
-| [W25Q64JVSSIM](https://jlcpcb.com/partdetail/C5362615) (Winbond) | SOIC-8 208 mil | yes | JLCPCB C5362615 | 2.97 | 9,073 |
+| [W25Q64JVSSIM](https://jlcpcb.com/partdetail/C5362615) (Winbond, current U1) | SOIC-8 208 mil | yes | JLCPCB C5362615 | 2.97 | 9,073 |
 | [W25Q64JVZEIQ](https://jlcpcb.com/partdetail/C571262) (Winbond) | WSON-8 6x8 | yes | JLCPCB C571262 | 3.66 | 6,700 |
 | [W25Q64JVXGIQ](https://www.digikey.com/en/products/detail/winbond-electronics/W25Q64JVXGIQ-TR/15181863) (Winbond) | XSON-8 4x4 | yes | DigiKey | 4.53 | 35,041, supply constrained |
-| [W25Q64JVXGIM](https://jlcpcb.com/partdetail/C6604688) (Winbond, current U1) | XSON-8 4x4 | yes | JLCPCB C6604688 | 7.16 | 4,876 |
+| [W25Q64JVXGIM](https://jlcpcb.com/partdetail/C6604688) (Winbond, U1 until 31 Oct 2026) | XSON-8 4x4 | yes | JLCPCB C6604688 | 7.16 | 4,876 |
 | [GD25Q64ESIGR](https://jlcpcb.com/partdetail/C2831359) (GigaDevice) | SOP-8 208 mil | no | JLCPCB C2831359 | 1.00 | 17,512 |
 | [GD25Q64ETIGR](https://jlcpcb.com/partdetail/C2976334) (GigaDevice) | SOP-8 150 mil | no | JLCPCB C2976334 | 1.30 | 9,305 |
 | [GD25Q64EQIGR](https://www.digikey.com/en/products/detail/gigadevice-electronics-singapore-pte-ltd/GD25Q64EQIGR/20531989) (GigaDevice) | USON-8 4x4 | no | DigiKey | 2.23 | 5,774, purchase limit |
@@ -113,6 +113,28 @@ The Zetta ZD25Q64DSIGT is the part the original Rev 4 plan named. It was checked
 fits U1's footprint unchanged. Only the boot code differs. The JLCPCB page (extended part) showed no price or stock.
 
 Puya's datasheet also lists the P25Q64SH in USON 4x4 and 3x2 mm, but no distributor I checked stocks those versions.
+
+## U1 options on the V2 footprint (208 mil)
+
+Added 12 Nov 2026. U1 on Leyden Jar V2 uses `Leyden_Jar:SOIC-8_5.3x5.3mm_P1.27mm` (208 mil). These 8 MB parts fit
+it with no board change and work with the default boot code, so only U1's Value, LCSC and Datasheet fields change.
+The board's end user plans to fit the Puya P25Q64SH-SUH. Prices are for 1 piece at JLCPCB (all extended parts), read
+on 12 Nov 2026.
+
+| Part | Package | JLCPCB # | Price (USD) | Stock | Notes |
+| --- | --- | --- | ---: | ---: | --- |
+| [P25Q64SH-SUH-IT](https://jlcpcb.com/partdetail/C5691158) (Puya) | SOP-8 208 mil | C5691158 | 0.64 | 104 | End user's choice. Tube (reel of 96). Low stock: enough for a small batch only |
+| [P25Q64SH-SUH-IR](https://jlcpcb.com/partdetail/C5274904) (Puya) | SOP-8 208 mil | C5274904 | 0.81 | 0 | Same chip on tape and reel; out of stock |
+| [BY25Q64ESSIG(R)](https://jlcpcb.com/partdetail/C22471254) (Boya) | SOP-8 208 mil | C22471254 | 0.89 | 2,981 | Tape and reel. JLCPCB labels the package "SSOP-8-208mil" |
+| [BY25Q64ESSIG(T)](https://jlcpcb.com/partdetail/C50172598) (Boya) | SOP-8 208 mil | C50172598 | 0.86 | 116 | Tube |
+| [W25Q64JVSSIM](https://jlcpcb.com/partdetail/C5362615) (Winbond, current U1) | SOIC-8 208 mil | C5362615 | 2.78 | 5,740 | QE off from the factory, set by the boot code |
+| [W25Q64JVSSIQ](https://jlcpcb.com/partdetail/C2904572) (Winbond) | SOIC-8 208 mil | C2904572 | 2.15 | 1 | Effectively out of stock. C179171 (same part) is pre-order only: 2 in stock, about $1.91, minimum 5 |
+
+- **Puya P25Q64SH-SUH fits U1 unchanged:** datasheet V1.5 p. 98 gives 7.80-8.00 mm across the leads (E), body
+  5.28 x 5.23 mm, 1.27 mm pitch, the same as the W25Q64JVSSIM; the pinout (p. 4) is the standard 25-series one. In
+  the suffix, I = -40 to 85 °C, T = tube, R = tape and reel (p. 95), so -IT and -IR are the same chip.
+- **Fallbacks:** Boya BY25Q64ESSIG(R) is the in-stock low-cost drop-in, Winbond W25Q64JVSSIM the proven one.
+- The 150 mil P25Q64SH-SSH-IT/-IR in the 8 MB table above do **not** fit U1's 208 mil pads.
 
 ## 4 MB parts you can buy
 
@@ -164,4 +186,4 @@ The smallest is the Pico 2's own Winbond W25Q32RVXHJQ, XSON 2x3 mm at $3.90. Pri
 - Zetta, [ZD25Q64D datasheet (LCSC C55199021)](https://datasheet.lcsc.com/datasheet/pdf/cc7cb1d7611dcd5a83b8f58cf15444c9.pdf?productCode=C55199021)
 - QMK, [issue #25881: RP2350 support](https://github.com/qmk/qmk_firmware/issues/25881)
 - Prices and stock: [JLCPCB parts library](https://jlcpcb.com/parts), [LCSC](https://www.lcsc.com/search?q=P25Q64SH),
-  DigiKey pages linked in the table, read on 28 Oct 2026
+  DigiKey pages linked in the table, read on 28 Oct 2026 (208 mil U1 table: JLCPCB, 12 Nov 2026)
