@@ -90,20 +90,25 @@ board stays powered.
 
 ## Read clock limits and the bootrom's own read mode
 
-Added 13 Nov 2026. Puya P25Q64SH maximum clock per read command, from
-[datasheet V1.5](https://www.puyasemi.com/download_path/%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/Flash%20%E8%8A%AF%E7%89%87/P25Q64SH_Datasheet_V1.5.pdf)
-p. 8, table 5-3-1 (2.3-3.6 V, -40 to +85 °C):
+Added 13 Nov 2026. Maximum clock per read command:
 
-| Read command | Symbol | Max clock |
-| --- | --- | ---: |
-| `03h` read | fR | **55 MHz** (clock high and low at least 8 ns each) |
-| `0Bh` fast read | fC | 120 MHz |
-| `BBh` dual I/O read (2READ) | fT | 120 MHz |
-| `EBh` quad I/O read (4READ) | fQ | 120 MHz (104 MHz with 6 dummy cycles, p. 9, table 5-3-2) |
+- Puya P25Q64SH,
+  [datasheet V1.5](https://www.puyasemi.com/download_path/%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/Flash%20%E8%8A%AF%E7%89%87/P25Q64SH_Datasheet_V1.5.pdf)
+  p. 8, table 5-3-1 (2.3-3.6 V, -40 to +85 °C).
+- Boya BY25Q64ESSIG,
+  [datasheet Rev 2.9](https://dfsimg1.hqewimg.com/group6/M00/06/85/wKhk6WpQPxKAblswAEnnmtKnVYs835.pdf) p. 70,
+  table 8.7 (2.7-3.6 V, -40 to +85 °C, 30 pF load). The 105 °C and 125 °C grades allow 108 MHz and 90 MHz (`03h`).
+- Winbond W25Q64JV: about 50 MHz for `03h` (not re-checked here).
 
-Only the plain `03h` read is slow. Winbond's W25Q64JV allows about 50 MHz for `03h` (not re-checked here). The
-pico-sdk boot code reads with `EBh` at 75 MHz, so the `03h` limit only matters to firmware that runs without boot
-stage 2.
+| Read command | Puya P25Q64SH | Boya BY25Q64ES |
+| --- | ---: | ---: |
+| `03h` read (fR) | **55 MHz** (clock high and low at least 8 ns each) | **100 MHz** |
+| `0Bh` fast read | 120 MHz | 120 MHz at 3.0-3.6 V, 108 MHz at 2.7-2.9 V |
+| `BBh` dual I/O read | 120 MHz (104 MHz with 4 dummy cycles, p. 9, table 5-3-2) | same as `0Bh` |
+| `EBh` quad I/O read | 120 MHz (104 MHz with 6 dummy cycles, p. 9, table 5-3-2) | same as `0Bh` |
+
+Only the plain `03h` read is slow, and only on Puya and Winbond. The pico-sdk boot code reads with `EBh` at 75 MHz,
+so the `03h` limit only matters to firmware that runs without boot stage 2.
 
 Firmware without boot stage 2 (for example the ChibiOS-based QMK fork
 [emolitor/qmk_firmware `em-rp2350`](https://github.com/emolitor/qmk_firmware/tree/em-rp2350)) keeps the read mode that
@@ -121,12 +126,51 @@ the bootrom found at boot. From the
 What that means for V2 with such firmware:
 
 - **QE = 0** (factory state of the W25Q64JVSSIM, Puya and Boya): the `EBh` attempt fails, and the bootrom settles on
-  `BBh` dual I/O, 2 bits per clock at 50 MHz. Dual I/O works with QE = 0 (Puya V1.5 p. 4, pin description note 2).
+  `BBh` dual I/O, 2 bits per clock at 50 MHz. Dual I/O works with QE = 0 (Puya V1.5 p. 4, pin description note 2;
+  Boya Rev 2.9 p. 10, section 4.2 lists no QE requirement for dual, while section 4.3 requires it for quad; QE
+  default 0, p. 17).
 - **QE = 1**: QE is non-volatile, so it only has to be set once, by any firmware. From then on the bootrom boots
   with `EBh` quad at 50 MHz, without boot stage 2.
-- `03h` is only a fallback. At 50 MHz it stays under Puya's 55 MHz; Winbond's 50 MHz is right at the limit.
+- **Read formats match:** the bootrom's `BBh` (command, address and mode byte at 2 bits per clock, no dummy) and `EBh`
+  (address, mode byte, 4 dummy clocks) are the formats in Puya's command table (p. 22: `BBh` 4 dummy clocks, `EBh` 6)
+  and Boya's (pp. 34 and 36). Mode byte `00h` keeps both out of continuous-read mode (that needs M5-4 = 10).
+- `03h` is only a fallback. At 50 MHz it stays under Puya's 55 MHz and well under Boya's 100 MHz; Winbond's 50 MHz is
+  right at the limit.
 - The ChibiOS flash driver restores the saved read registers after each EEPROM write. That works because these
   bootrom modes send the command on every read.
+
+### Estimated read speed
+
+Added 13 Nov 2026. These are clock-count estimates, not measurements: command, address, mode/dummy and data clocks
+per 8-byte XIP cache-line fill. Chip-select gaps and synchroniser delays are left out, so real figures are a little
+lower.
+
+- **RP2350 (V2, firmware without boot stage 2):** 150 MHz / `CLKDIV` 3 = 50 MHz SCK. The bootrom sets `COOLDOWN` = 1,
+  so sequential line fills continue without resending the command and address.
+- **RP2040 (Rev 3):** Leyden Jar's firmware uses QMK's precompiled W25Q080 boot stage 2, which sets the SSI `BAUDR`
+  to 4 (pico-sdk default: 2). At 125 MHz system clock that is 31.25 MHz SCK, with `EBh` quad in continuous-read mode
+  (no command byte after the first read), but the address is sent again on every miss.
+
+| Mode | Cmd | Addr | Mode + dummy | Data | Clocks per miss | Time per miss | ≈ CPU cycles |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| RP2350 `BBh` dual, 50 MHz | 8 | 12 | 4 | 32 | 56 | 1.12 µs | 170 |
+| RP2350 `EBh` quad, 50 MHz | 8 | 6 | 2 + 4 | 16 | 36 | 0.72 µs | 108 |
+| RP2350 `03h` serial, 50 MHz (fallback) | 8 | 24 | — | 64 | 96 | 1.92 µs | 288 |
+| Rev 3 RP2040 `EBh` quad, 31.25 MHz | — | 6 | 2 + 4 | 16 | 28 | 0.90 µs | 112 |
+
+| Mode | Random misses | Sequential | Interface limit |
+| --- | ---: | ---: | ---: |
+| RP2350 `BBh` dual, 50 MHz | ~7 MB/s | ~12.5 MB/s | 12.5 MB/s |
+| RP2350 `EBh` quad, 50 MHz | ~11 MB/s | ~25 MB/s | 25 MB/s |
+| Rev 3 RP2040 `EBh` quad, 31.25 MHz | ~9 MB/s | ~9 MB/s (no chaining) | 15.6 MB/s |
+
+- V2 in dual mode (QE = 0) is about 20% slower than Rev 3 per random miss and faster on sequential reads. Both chips
+  have a 16 KB XIP cache, so a keyboard firmware loop runs mostly from cache either way.
+- Rev 3's quad mode is held back by QMK's conservative `BAUDR` 4, so it is only a little faster than V2's dual mode.
+- Setting QE once on V2 gives `EBh` quad at 50 MHz, faster than Rev 3 on every access pattern, with no boot stage 2.
+- The RP2350 rows apply to Winbond, Puya and Boya alike: the command formats are the same, so the clock counts are
+  too. The chips differ only in margin: at 50 MHz Boya uses half its `03h` limit, Puya 91% and Winbond all of it.
+  A `CLKDIV` of 2 (75 MHz) would still be within Puya's and Boya's dual and quad limits.
 
 ## 8 MB parts you can buy
 
