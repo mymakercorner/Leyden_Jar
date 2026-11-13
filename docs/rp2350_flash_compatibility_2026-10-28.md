@@ -88,6 +88,46 @@ code sets it. Raspberry Pi also warns that a chip must leave continuous-read mod
 RP2350 can't recover after a reset without a power cycle. Check this on the first prototype by pressing RUN while the
 board stays powered.
 
+## Read clock limits and the bootrom's own read mode
+
+Added 13 Nov 2026. Puya P25Q64SH maximum clock per read command, from
+[datasheet V1.5](https://www.puyasemi.com/download_path/%E6%95%B0%E6%8D%AE%E6%89%8B%E5%86%8C/Flash%20%E8%8A%AF%E7%89%87/P25Q64SH_Datasheet_V1.5.pdf)
+p. 8, table 5-3-1 (2.3-3.6 V, -40 to +85 °C):
+
+| Read command | Symbol | Max clock |
+| --- | --- | ---: |
+| `03h` read | fR | **55 MHz** (clock high and low at least 8 ns each) |
+| `0Bh` fast read | fC | 120 MHz |
+| `BBh` dual I/O read (2READ) | fT | 120 MHz |
+| `EBh` quad I/O read (4READ) | fQ | 120 MHz (104 MHz with 6 dummy cycles, p. 9, table 5-3-2) |
+
+Only the plain `03h` read is slow. Winbond's W25Q64JV allows about 50 MHz for `03h` (not re-checked here). The
+pico-sdk boot code reads with `EBh` at 75 MHz, so the `03h` limit only matters to firmware that runs without boot
+stage 2.
+
+Firmware without boot stage 2 (for example the ChibiOS-based QMK fork
+[emolitor/qmk_firmware `em-rp2350`](https://github.com/emolitor/qmk_firmware/tree/em-rp2350)) keeps the read mode that
+the bootrom found at boot. From the
+[RP2350 bootrom source](https://github.com/raspberrypi/pico-bootrom-rp2350) (`src/main/arm/varm_flash_boot.c`,
+`src/main/native/native_generic_flash.h`, `src/main/arm/arm8_bootrom_rt0.S`):
+
+1. Flash boot tries the read modes fastest first: `EBh` quad, `BBh` dual, `0Bh` serial, then `03h` serial, all with
+   QMI `CLKDIV` 3. If none of them finds a valid image, it doubles the divider (6, 12, 24) and tries again.
+2. The `EBh` and `BBh` modes send the command on every read (mode byte `00h`, no continuous read).
+3. The first mode that finds the image stays active when the image starts. The bootrom also stores it in boot RAM so
+   it can restore it later.
+4. `CLKDIV` 3 is meant for the full 150 MHz system clock: the source comment says "50 MHz at max clk_sys of 150 MHz".
+
+What that means for V2 with such firmware:
+
+- **QE = 0** (factory state of the W25Q64JVSSIM, Puya and Boya): the `EBh` attempt fails, and the bootrom settles on
+  `BBh` dual I/O, 2 bits per clock at 50 MHz. Dual I/O works with QE = 0 (Puya V1.5 p. 4, pin description note 2).
+- **QE = 1**: QE is non-volatile, so it only has to be set once, by any firmware. From then on the bootrom boots
+  with `EBh` quad at 50 MHz, without boot stage 2.
+- `03h` is only a fallback. At 50 MHz it stays under Puya's 55 MHz; Winbond's 50 MHz is right at the limit.
+- The ChibiOS flash driver restores the saved read registers after each EEPROM write. That works because these
+  bootrom modes send the command on every read.
+
 ## 8 MB parts you can buy
 
 The cheapest 8 MB option that works with the default boot code is the Puya P25Q64SH at $0.76, in SOP-8. Every
@@ -166,6 +206,9 @@ After U1 is fitted:
    - BOOT button held during reset.
 4. Erase and program a sector from firmware, then read it back. Vial/QMK keep their EEPROM data in flash, so the
    write path must work, not only reads.
+5. Added 13 Nov 2026, for firmware without boot stage 2 (QMK/ChibiOS): read `QMI->M0_TIMING`, `M0_RCMD` and
+   `M0_RFMT` at runtime. Expected: `CLKDIV` (bits 7:0 of `M0_TIMING`) = 3, and the read command (bits 7:0 of
+   `M0_RCMD`) `BBh` while QE = 0, `EBh` once QE = 1. See "Read clock limits and the bootrom's own read mode" above.
 
 ## 4 MB parts you can buy
 
